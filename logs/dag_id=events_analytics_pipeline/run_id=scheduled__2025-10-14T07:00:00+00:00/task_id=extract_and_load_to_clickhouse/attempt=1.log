@@ -1,0 +1,42 @@
+[2025-10-14T08:00:02.203+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: events_analytics_pipeline.extract_and_load_to_clickhouse scheduled__2025-10-14T07:00:00+00:00 [queued]>
+[2025-10-14T08:00:02.206+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: events_analytics_pipeline.extract_and_load_to_clickhouse scheduled__2025-10-14T07:00:00+00:00 [queued]>
+[2025-10-14T08:00:02.206+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-10-14T08:00:02.209+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): extract_and_load_to_clickhouse> on 2025-10-14 07:00:00+00:00
+[2025-10-14T08:00:02.212+0000] {standard_task_runner.py:60} INFO - Started process 1474 to run task
+[2025-10-14T08:00:02.214+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'events_analytics_pipeline', 'extract_and_load_to_clickhouse', 'scheduled__2025-10-14T07:00:00+00:00', '--job-id', '97', '--raw', '--subdir', 'DAGS_FOLDER/events_pipeline_dag.py', '--cfg-path', '/tmp/tmpy8ipassl']
+[2025-10-14T08:00:02.215+0000] {standard_task_runner.py:88} INFO - Job 97: Subtask extract_and_load_to_clickhouse
+[2025-10-14T08:00:02.232+0000] {task_command.py:423} INFO - Running <TaskInstance: events_analytics_pipeline.extract_and_load_to_clickhouse scheduled__2025-10-14T07:00:00+00:00 [running]> on host 7fd364930f15
+[2025-10-14T08:00:02.256+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data-team' AIRFLOW_CTX_DAG_ID='events_analytics_pipeline' AIRFLOW_CTX_TASK_ID='extract_and_load_to_clickhouse' AIRFLOW_CTX_EXECUTION_DATE='2025-10-14T07:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-10-14T07:00:00+00:00'
+[2025-10-14T08:00:02.257+0000] {events_pipeline_dag.py:67} INFO - Connecting to PostgreSQL...
+[2025-10-14T08:00:02.257+0000] {events_pipeline_dag.py:70} INFO - Extracting data from PostgreSQL...
+[2025-10-14T08:00:02.596+0000] {events_pipeline_dag.py:82} INFO - Extracted 21300 rows from PostgreSQL
+[2025-10-14T08:00:02.596+0000] {events_pipeline_dag.py:84} INFO - Connecting to ClickHouse...
+[2025-10-14T08:00:02.596+0000] {events_pipeline_dag.py:87} INFO - Clearing existing data...
+[2025-10-14T08:00:02.600+0000] {events_pipeline_dag.py:90} INFO - Loading data into ClickHouse...
+[2025-10-14T08:00:02.611+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 1/22
+[2025-10-14T08:00:02.619+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 2/22
+[2025-10-14T08:00:02.624+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 3/22
+[2025-10-14T08:00:02.629+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 4/22
+[2025-10-14T08:00:02.635+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 5/22
+[2025-10-14T08:00:02.640+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 6/22
+[2025-10-14T08:00:02.647+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 7/22
+[2025-10-14T08:00:02.653+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 8/22
+[2025-10-14T08:00:02.658+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 9/22
+[2025-10-14T08:00:02.663+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 10/22
+[2025-10-14T08:00:02.668+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 11/22
+[2025-10-14T08:00:02.673+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 12/22
+[2025-10-14T08:00:02.677+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 13/22
+[2025-10-14T08:00:02.682+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 14/22
+[2025-10-14T08:00:02.687+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 15/22
+[2025-10-14T08:00:02.691+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 16/22
+[2025-10-14T08:00:02.696+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 17/22
+[2025-10-14T08:00:02.702+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 18/22
+[2025-10-14T08:00:02.706+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 19/22
+[2025-10-14T08:00:02.711+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 20/22
+[2025-10-14T08:00:02.715+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 21/22
+[2025-10-14T08:00:02.717+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 22/22
+[2025-10-14T08:00:02.719+0000] {events_pipeline_dag.py:100} INFO - ✓ Successfully loaded 21300 rows into ClickHouse
+[2025-10-14T08:00:02.729+0000] {python.py:201} INFO - Done. Returned value was: 21300
+[2025-10-14T08:00:02.737+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=events_analytics_pipeline, task_id=extract_and_load_to_clickhouse, execution_date=20251014T070000, start_date=20251014T080002, end_date=20251014T080002
+[2025-10-14T08:00:02.770+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-10-14T08:00:02.782+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

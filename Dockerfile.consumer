@@ -1,0 +1,14 @@
+# Dockerfile for Kafka consumer
+FROM python:3.10-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy project files
+COPY . /app
+
+# Install dependencies
+RUN pip install --no-cache-dir psycopg2-binary kafka-python
+
+# Run the consumer
+CMD ["python", "consumer.py"]

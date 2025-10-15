@@ -1,0 +1,29 @@
+[2025-10-13T14:49:03.900+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: events_analytics_pipeline.dbt_run manual__2025-10-13T14:48:58.664092+00:00 [queued]>
+[2025-10-13T14:49:03.902+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: events_analytics_pipeline.dbt_run manual__2025-10-13T14:48:58.664092+00:00 [queued]>
+[2025-10-13T14:49:03.902+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-10-13T14:49:03.906+0000] {taskinstance.py:2191} INFO - Executing <Task(BashOperator): dbt_run> on 2025-10-13 14:48:58.664092+00:00
+[2025-10-13T14:49:03.909+0000] {standard_task_runner.py:60} INFO - Started process 209 to run task
+[2025-10-13T14:49:03.911+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'events_analytics_pipeline', 'dbt_run', 'manual__2025-10-13T14:48:58.664092+00:00', '--job-id', '50', '--raw', '--subdir', 'DAGS_FOLDER/events_pipeline_dag.py', '--cfg-path', '/tmp/tmp2s8de1qy']
+[2025-10-13T14:49:03.912+0000] {standard_task_runner.py:88} INFO - Job 50: Subtask dbt_run
+[2025-10-13T14:49:03.928+0000] {task_command.py:423} INFO - Running <TaskInstance: events_analytics_pipeline.dbt_run manual__2025-10-13T14:48:58.664092+00:00 [running]> on host 7fd364930f15
+[2025-10-13T14:49:03.951+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data-team' AIRFLOW_CTX_DAG_ID='events_analytics_pipeline' AIRFLOW_CTX_TASK_ID='dbt_run' AIRFLOW_CTX_EXECUTION_DATE='2025-10-13T14:48:58.664092+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-13T14:48:58.664092+00:00'
+[2025-10-13T14:49:03.952+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-10-13T14:49:03.952+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'cd /opt/***/event_gen && dbt run --profiles-dir /opt/***/.dbt']
+[2025-10-13T14:49:03.957+0000] {subprocess.py:86} INFO - Output:
+[2025-10-13T14:49:04.871+0000] {subprocess.py:93} INFO - [0m14:49:04  Running with dbt=1.10.13
+[2025-10-13T14:49:04.873+0000] {subprocess.py:93} INFO - [0m14:49:04  Encountered an error:
+[2025-10-13T14:49:04.873+0000] {subprocess.py:93} INFO - Runtime Error
+[2025-10-13T14:49:04.874+0000] {subprocess.py:93} INFO -   Could not find profile named 'event_gen'
+[2025-10-13T14:49:06.210+0000] {subprocess.py:97} INFO - Command exited with return code 2
+[2025-10-13T14:49:06.216+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/bash.py", line 212, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 2.
+[2025-10-13T14:49:06.219+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=events_analytics_pipeline, task_id=dbt_run, execution_date=20251013T144858, start_date=20251013T144903, end_date=20251013T144906
+[2025-10-13T14:49:06.224+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 50 for task dbt_run (Bash command failed. The command returned a non-zero exit code 2.; 209)
+[2025-10-13T14:49:06.229+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-10-13T14:49:06.238+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

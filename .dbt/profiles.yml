@@ -1,0 +1,12 @@
+event_gen:
+  target: dev
+  outputs:
+    dev:
+      type: clickhouse
+      host: clickhouse
+      port: 9000
+      user: default
+      password: ''
+      schema: analytics
+      threads: 4
+      secure: false

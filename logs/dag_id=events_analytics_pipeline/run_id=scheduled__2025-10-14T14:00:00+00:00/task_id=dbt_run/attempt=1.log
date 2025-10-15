@@ -1,0 +1,36 @@
+[2025-10-14T15:26:09.312+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: events_analytics_pipeline.dbt_run scheduled__2025-10-14T14:00:00+00:00 [queued]>
+[2025-10-14T15:26:09.314+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: events_analytics_pipeline.dbt_run scheduled__2025-10-14T14:00:00+00:00 [queued]>
+[2025-10-14T15:26:09.314+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-10-14T15:26:09.318+0000] {taskinstance.py:2191} INFO - Executing <Task(BashOperator): dbt_run> on 2025-10-14 14:00:00+00:00
+[2025-10-14T15:26:09.321+0000] {standard_task_runner.py:60} INFO - Started process 2685 to run task
+[2025-10-14T15:26:09.323+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'events_analytics_pipeline', 'dbt_run', 'scheduled__2025-10-14T14:00:00+00:00', '--job-id', '147', '--raw', '--subdir', 'DAGS_FOLDER/events_pipeline_dag.py', '--cfg-path', '/tmp/tmp9jmnn092']
+[2025-10-14T15:26:09.324+0000] {standard_task_runner.py:88} INFO - Job 147: Subtask dbt_run
+[2025-10-14T15:26:09.341+0000] {task_command.py:423} INFO - Running <TaskInstance: events_analytics_pipeline.dbt_run scheduled__2025-10-14T14:00:00+00:00 [running]> on host 7fd364930f15
+[2025-10-14T15:26:09.374+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data-team' AIRFLOW_CTX_DAG_ID='events_analytics_pipeline' AIRFLOW_CTX_TASK_ID='dbt_run' AIRFLOW_CTX_EXECUTION_DATE='2025-10-14T14:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-10-14T14:00:00+00:00'
+[2025-10-14T15:26:09.375+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-10-14T15:26:09.375+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'cd /opt/***/event_gen && /home/***/.local/bin/dbt run --profiles-dir /opt/***/.dbt --project-dir /opt/***/event_gen']
+[2025-10-14T15:26:09.379+0000] {subprocess.py:86} INFO - Output:
+[2025-10-14T15:26:10.012+0000] {subprocess.py:93} INFO - [0m15:26:10  Running with dbt=1.10.13
+[2025-10-14T15:26:10.096+0000] {subprocess.py:93} INFO - [0m15:26:10  Registered adapter: clickhouse=1.9.4
+[2025-10-14T15:26:10.264+0000] {subprocess.py:93} INFO - [0m15:26:10  Found 4 models, 30 data tests, 1 source, 599 macros
+[2025-10-14T15:26:10.265+0000] {subprocess.py:93} INFO - [0m15:26:10
+[2025-10-14T15:26:10.266+0000] {subprocess.py:93} INFO - [0m15:26:10  Concurrency: 4 threads (target='dev')
+[2025-10-14T15:26:10.266+0000] {subprocess.py:93} INFO - [0m15:26:10
+[2025-10-14T15:26:10.382+0000] {subprocess.py:93} INFO - [0m15:26:10  1 of 4 START sql view model `analytics`.`stg_events` ........................... [RUN]
+[2025-10-14T15:26:10.418+0000] {subprocess.py:93} INFO - [0m15:26:10  1 of 4 OK created sql view model `analytics`.`stg_events` ...................... [[32mOK[0m in 0.04s]
+[2025-10-14T15:26:10.420+0000] {subprocess.py:93} INFO - [0m15:26:10  2 of 4 START sql table model `analytics`.`dim_pages` ........................... [RUN]
+[2025-10-14T15:26:10.420+0000] {subprocess.py:93} INFO - [0m15:26:10  3 of 4 START sql table model `analytics`.`dim_users` ........................... [RUN]
+[2025-10-14T15:26:10.420+0000] {subprocess.py:93} INFO - [0m15:26:10  4 of 4 START sql table model `analytics`.`fct_events` .......................... [RUN]
+[2025-10-14T15:26:10.526+0000] {subprocess.py:93} INFO - [0m15:26:10  4 of 4 OK created sql table model `analytics`.`fct_events` ..................... [[32mOK[0m in 0.10s]
+[2025-10-14T15:26:10.527+0000] {subprocess.py:93} INFO - [0m15:26:10  2 of 4 OK created sql table model `analytics`.`dim_pages` ...................... [[32mOK[0m in 0.10s]
+[2025-10-14T15:26:10.533+0000] {subprocess.py:93} INFO - [0m15:26:10  3 of 4 OK created sql table model `analytics`.`dim_users` ...................... [[32mOK[0m in 0.11s]
+[2025-10-14T15:26:10.537+0000] {subprocess.py:93} INFO - [0m15:26:10
+[2025-10-14T15:26:10.537+0000] {subprocess.py:93} INFO - [0m15:26:10  Finished running 3 table models, 1 view model in 0 hours 0 minutes and 0.27 seconds (0.27s).
+[2025-10-14T15:26:10.563+0000] {subprocess.py:93} INFO - [0m15:26:10
+[2025-10-14T15:26:10.563+0000] {subprocess.py:93} INFO - [0m15:26:10  [32mCompleted successfully[0m
+[2025-10-14T15:26:10.563+0000] {subprocess.py:93} INFO - [0m15:26:10
+[2025-10-14T15:26:10.563+0000] {subprocess.py:93} INFO - [0m15:26:10  Done. PASS=4 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=4
+[2025-10-14T15:26:11.929+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2025-10-14T15:26:11.941+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=events_analytics_pipeline, task_id=dbt_run, execution_date=20251014T140000, start_date=20251014T152609, end_date=20251014T152611
+[2025-10-14T15:26:11.951+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-10-14T15:26:11.961+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

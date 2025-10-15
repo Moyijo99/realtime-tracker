@@ -1,0 +1,16 @@
+[2025-10-14T06:37:26.478+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: events_analytics_pipeline.verify_clickhouse_data manual__2025-10-14T06:37:23.028516+00:00 [queued]>
+[2025-10-14T06:37:26.481+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: events_analytics_pipeline.verify_clickhouse_data manual__2025-10-14T06:37:23.028516+00:00 [queued]>
+[2025-10-14T06:37:26.481+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-10-14T06:37:26.485+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): verify_clickhouse_data> on 2025-10-14 06:37:23.028516+00:00
+[2025-10-14T06:37:26.488+0000] {standard_task_runner.py:60} INFO - Started process 191 to run task
+[2025-10-14T06:37:26.489+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'events_analytics_pipeline', 'verify_clickhouse_data', 'manual__2025-10-14T06:37:23.028516+00:00', '--job-id', '80', '--raw', '--subdir', 'DAGS_FOLDER/events_pipeline_dag.py', '--cfg-path', '/tmp/tmpm6qe45yb']
+[2025-10-14T06:37:26.491+0000] {standard_task_runner.py:88} INFO - Job 80: Subtask verify_clickhouse_data
+[2025-10-14T06:37:26.507+0000] {task_command.py:423} INFO - Running <TaskInstance: events_analytics_pipeline.verify_clickhouse_data manual__2025-10-14T06:37:23.028516+00:00 [running]> on host 7fd364930f15
+[2025-10-14T06:37:26.534+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data-team' AIRFLOW_CTX_DAG_ID='events_analytics_pipeline' AIRFLOW_CTX_TASK_ID='verify_clickhouse_data' AIRFLOW_CTX_EXECUTION_DATE='2025-10-14T06:37:23.028516+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-14T06:37:23.028516+00:00'
+[2025-10-14T06:37:26.539+0000] {events_pipeline_dag.py:114} INFO - Total records in ClickHouse: 21300
+[2025-10-14T06:37:26.545+0000] {events_pipeline_dag.py:123} INFO - Date range: 2025-10-02 22:16:54 to 2025-10-10 23:27:38
+[2025-10-14T06:37:26.545+0000] {events_pipeline_dag.py:124} INFO - Unique users: 21300
+[2025-10-14T06:37:26.545+0000] {python.py:201} INFO - Done. Returned value was: 21300
+[2025-10-14T06:37:26.555+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=events_analytics_pipeline, task_id=verify_clickhouse_data, execution_date=20251014T063723, start_date=20251014T063726, end_date=20251014T063726
+[2025-10-14T06:37:26.590+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-10-14T06:37:26.599+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

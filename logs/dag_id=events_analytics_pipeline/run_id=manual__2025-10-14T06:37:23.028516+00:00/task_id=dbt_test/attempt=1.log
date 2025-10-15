@@ -1,0 +1,88 @@
+[2025-10-14T06:37:31.464+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: events_analytics_pipeline.dbt_test manual__2025-10-14T06:37:23.028516+00:00 [queued]>
+[2025-10-14T06:37:31.467+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: events_analytics_pipeline.dbt_test manual__2025-10-14T06:37:23.028516+00:00 [queued]>
+[2025-10-14T06:37:31.467+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-10-14T06:37:31.471+0000] {taskinstance.py:2191} INFO - Executing <Task(BashOperator): dbt_test> on 2025-10-14 06:37:23.028516+00:00
+[2025-10-14T06:37:31.474+0000] {standard_task_runner.py:60} INFO - Started process 209 to run task
+[2025-10-14T06:37:31.476+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'events_analytics_pipeline', 'dbt_test', 'manual__2025-10-14T06:37:23.028516+00:00', '--job-id', '82', '--raw', '--subdir', 'DAGS_FOLDER/events_pipeline_dag.py', '--cfg-path', '/tmp/tmposxqmboh']
+[2025-10-14T06:37:31.477+0000] {standard_task_runner.py:88} INFO - Job 82: Subtask dbt_test
+[2025-10-14T06:37:31.498+0000] {task_command.py:423} INFO - Running <TaskInstance: events_analytics_pipeline.dbt_test manual__2025-10-14T06:37:23.028516+00:00 [running]> on host 7fd364930f15
+[2025-10-14T06:37:31.527+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data-team' AIRFLOW_CTX_DAG_ID='events_analytics_pipeline' AIRFLOW_CTX_TASK_ID='dbt_test' AIRFLOW_CTX_EXECUTION_DATE='2025-10-14T06:37:23.028516+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-14T06:37:23.028516+00:00'
+[2025-10-14T06:37:31.528+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-10-14T06:37:31.529+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'cd /opt/***/event_gen && /home/***/.local/bin/dbt test --profiles-dir /opt/***/.dbt --project-dir /opt/***/event_gen']
+[2025-10-14T06:37:31.536+0000] {subprocess.py:86} INFO - Output:
+[2025-10-14T06:37:32.210+0000] {subprocess.py:93} INFO - [0m06:37:32  Running with dbt=1.10.13
+[2025-10-14T06:37:32.311+0000] {subprocess.py:93} INFO - [0m06:37:32  Registered adapter: clickhouse=1.9.4
+[2025-10-14T06:37:32.526+0000] {subprocess.py:93} INFO - [0m06:37:32  Found 4 models, 30 data tests, 1 source, 599 macros
+[2025-10-14T06:37:32.528+0000] {subprocess.py:93} INFO - [0m06:37:32
+[2025-10-14T06:37:32.528+0000] {subprocess.py:93} INFO - [0m06:37:32  Concurrency: 4 threads (target='dev')
+[2025-10-14T06:37:32.529+0000] {subprocess.py:93} INFO - [0m06:37:32
+[2025-10-14T06:37:32.615+0000] {subprocess.py:93} INFO - [0m06:37:32  1 of 30 START test accepted_values_fct_events_event_type__True__page_view__click__scroll__form_submit__button_click  [RUN]
+[2025-10-14T06:37:32.615+0000] {subprocess.py:93} INFO - [0m06:37:32  2 of 30 START test dbt_utils_expression_is_true_dim_pages_total_events___0 ..... [RUN]
+[2025-10-14T06:37:32.615+0000] {subprocess.py:93} INFO - [0m06:37:32  3 of 30 START test dbt_utils_expression_is_true_dim_pages_unique_visitors___1 .. [RUN]
+[2025-10-14T06:37:32.616+0000] {subprocess.py:93} INFO - [0m06:37:32  4 of 30 START test dbt_utils_expression_is_true_dim_users_days_active___1 ...... [RUN]
+[2025-10-14T06:37:32.652+0000] {subprocess.py:93} INFO - [0m06:37:32  1 of 30 PASS accepted_values_fct_events_event_type__True__page_view__click__scroll__form_submit__button_click  [[32mPASS[0m in 0.04s]
+[2025-10-14T06:37:32.653+0000] {subprocess.py:93} INFO - [0m06:37:32  5 of 30 START test dbt_utils_expression_is_true_dim_users_total_events___0 ..... [RUN]
+[2025-10-14T06:37:32.665+0000] {subprocess.py:93} INFO - [0m06:37:32  5 of 30 PASS dbt_utils_expression_is_true_dim_users_total_events___0 ........... [[32mPASS[0m in 0.01s]
+[2025-10-14T06:37:32.666+0000] {subprocess.py:93} INFO - [0m06:37:32  6 of 30 START test not_null_dim_pages_domain ................................... [RUN]
+[2025-10-14T06:37:32.677+0000] {subprocess.py:93} INFO - [0m06:37:32  6 of 30 PASS not_null_dim_pages_domain ......................................... [[32mPASS[0m in 0.01s]
+[2025-10-14T06:37:32.679+0000] {subprocess.py:93} INFO - [0m06:37:32  2 of 30 PASS dbt_utils_expression_is_true_dim_pages_total_events___0 ........... [[32mPASS[0m in 0.06s]
+[2025-10-14T06:37:32.681+0000] {subprocess.py:93} INFO - [0m06:37:32  7 of 30 START test not_null_dim_pages_page_key ................................. [RUN]
+[2025-10-14T06:37:32.681+0000] {subprocess.py:93} INFO - [0m06:37:32  3 of 30 PASS dbt_utils_expression_is_true_dim_pages_unique_visitors___1 ........ [[32mPASS[0m in 0.06s]
+[2025-10-14T06:37:32.682+0000] {subprocess.py:93} INFO - [0m06:37:32  4 of 30 PASS dbt_utils_expression_is_true_dim_users_days_active___1 ............ [[32mPASS[0m in 0.07s]
+[2025-10-14T06:37:32.684+0000] {subprocess.py:93} INFO - [0m06:37:32  8 of 30 START test not_null_dim_pages_page_url ................................. [RUN]
+[2025-10-14T06:37:32.688+0000] {subprocess.py:93} INFO - [0m06:37:32  9 of 30 START test not_null_dim_pages_total_events ............................. [RUN]
+[2025-10-14T06:37:32.688+0000] {subprocess.py:93} INFO - [0m06:37:32  10 of 30 START test not_null_dim_pages_unique_visitors ......................... [RUN]
+[2025-10-14T06:37:32.704+0000] {subprocess.py:93} INFO - [0m06:37:32  7 of 30 PASS not_null_dim_pages_page_key ....................................... [[32mPASS[0m in 0.02s]
+[2025-10-14T06:37:32.705+0000] {subprocess.py:93} INFO - [0m06:37:32  8 of 30 PASS not_null_dim_pages_page_url ....................................... [[32mPASS[0m in 0.02s]
+[2025-10-14T06:37:32.707+0000] {subprocess.py:93} INFO - [0m06:37:32  9 of 30 PASS not_null_dim_pages_total_events ................................... [[32mPASS[0m in 0.02s]
+[2025-10-14T06:37:32.708+0000] {subprocess.py:93} INFO - [0m06:37:32  10 of 30 PASS not_null_dim_pages_unique_visitors ............................... [[32mPASS[0m in 0.02s]
+[2025-10-14T06:37:32.708+0000] {subprocess.py:93} INFO - [0m06:37:32  11 of 30 START test not_null_dim_users_days_active ............................. [RUN]
+[2025-10-14T06:37:32.709+0000] {subprocess.py:93} INFO - [0m06:37:32  12 of 30 START test not_null_dim_users_first_event_at .......................... [RUN]
+[2025-10-14T06:37:32.710+0000] {subprocess.py:93} INFO - [0m06:37:32  13 of 30 START test not_null_dim_users_total_events ............................ [RUN]
+[2025-10-14T06:37:32.711+0000] {subprocess.py:93} INFO - [0m06:37:32  14 of 30 START test not_null_dim_users_user_id ................................. [RUN]
+[2025-10-14T06:37:32.728+0000] {subprocess.py:93} INFO - [0m06:37:32  11 of 30 PASS not_null_dim_users_days_active ................................... [[32mPASS[0m in 0.02s]
+[2025-10-14T06:37:32.730+0000] {subprocess.py:93} INFO - [0m06:37:32  15 of 30 START test not_null_dim_users_user_key ................................ [RUN]
+[2025-10-14T06:37:32.732+0000] {subprocess.py:93} INFO - [0m06:37:32  12 of 30 PASS not_null_dim_users_first_event_at ................................ [[32mPASS[0m in 0.02s]
+[2025-10-14T06:37:32.733+0000] {subprocess.py:93} INFO - [0m06:37:32  13 of 30 PASS not_null_dim_users_total_events .................................. [[32mPASS[0m in 0.02s]
+[2025-10-14T06:37:32.734+0000] {subprocess.py:93} INFO - [0m06:37:32  14 of 30 PASS not_null_dim_users_user_id ....................................... [[32mPASS[0m in 0.02s]
+[2025-10-14T06:37:32.737+0000] {subprocess.py:93} INFO - [0m06:37:32  16 of 30 START test not_null_dim_users_username ................................ [RUN]
+[2025-10-14T06:37:32.738+0000] {subprocess.py:93} INFO - [0m06:37:32  17 of 30 START test not_null_fct_events_event_date ............................. [RUN]
+[2025-10-14T06:37:32.739+0000] {subprocess.py:93} INFO - [0m06:37:32  18 of 30 START test not_null_fct_events_event_key .............................. [RUN]
+[2025-10-14T06:37:32.750+0000] {subprocess.py:93} INFO - [0m06:37:32  15 of 30 PASS not_null_dim_users_user_key ...................................... [[32mPASS[0m in 0.02s]
+[2025-10-14T06:37:32.755+0000] {subprocess.py:93} INFO - [0m06:37:32  19 of 30 START test not_null_fct_events_event_timestamp ........................ [RUN]
+[2025-10-14T06:37:32.759+0000] {subprocess.py:93} INFO - [0m06:37:32  17 of 30 PASS not_null_fct_events_event_date ................................... [[32mPASS[0m in 0.02s]
+[2025-10-14T06:37:32.761+0000] {subprocess.py:93} INFO - [0m06:37:32  16 of 30 PASS not_null_dim_users_username ...................................... [[32mPASS[0m in 0.02s]
+[2025-10-14T06:37:32.762+0000] {subprocess.py:93} INFO - [0m06:37:32  18 of 30 PASS not_null_fct_events_event_key .................................... [[32mPASS[0m in 0.02s]
+[2025-10-14T06:37:32.764+0000] {subprocess.py:93} INFO - [0m06:37:32  20 of 30 START test not_null_fct_events_event_type ............................. [RUN]
+[2025-10-14T06:37:32.766+0000] {subprocess.py:93} INFO - [0m06:37:32  21 of 30 START test not_null_fct_events_page_url ............................... [RUN]
+[2025-10-14T06:37:32.766+0000] {subprocess.py:93} INFO - [0m06:37:32  22 of 30 START test not_null_fct_events_user_id ................................ [RUN]
+[2025-10-14T06:37:32.775+0000] {subprocess.py:93} INFO - [0m06:37:32  19 of 30 PASS not_null_fct_events_event_timestamp .............................. [[32mPASS[0m in 0.02s]
+[2025-10-14T06:37:32.780+0000] {subprocess.py:93} INFO - [0m06:37:32  23 of 30 START test relationships_fct_events_page_url__page_url__ref_dim_pages_  [RUN]
+[2025-10-14T06:37:32.787+0000] {subprocess.py:93} INFO - [0m06:37:32  21 of 30 PASS not_null_fct_events_page_url ..................................... [[32mPASS[0m in 0.02s]
+[2025-10-14T06:37:32.788+0000] {subprocess.py:93} INFO - [0m06:37:32  22 of 30 PASS not_null_fct_events_user_id ...................................... [[32mPASS[0m in 0.02s]
+[2025-10-14T06:37:32.789+0000] {subprocess.py:93} INFO - [0m06:37:32  20 of 30 PASS not_null_fct_events_event_type ................................... [[32mPASS[0m in 0.02s]
+[2025-10-14T06:37:32.792+0000] {subprocess.py:93} INFO - [0m06:37:32  24 of 30 START test relationships_fct_events_user_id__user_id__ref_dim_users_ .. [RUN]
+[2025-10-14T06:37:32.793+0000] {subprocess.py:93} INFO - [0m06:37:32  25 of 30 START test timestamp_not_future ....................................... [RUN]
+[2025-10-14T06:37:32.793+0000] {subprocess.py:93} INFO - [0m06:37:32  26 of 30 START test unique_dim_pages_page_key .................................. [RUN]
+[2025-10-14T06:37:32.804+0000] {subprocess.py:93} INFO - [0m06:37:32  23 of 30 PASS relationships_fct_events_page_url__page_url__ref_dim_pages_ ...... [[32mPASS[0m in 0.02s]
+[2025-10-14T06:37:32.810+0000] {subprocess.py:93} INFO - [0m06:37:32  27 of 30 START test unique_dim_pages_page_url .................................. [RUN]
+[2025-10-14T06:37:32.817+0000] {subprocess.py:93} INFO - [0m06:37:32  25 of 30 PASS timestamp_not_future ............................................. [[32mPASS[0m in 0.02s]
+[2025-10-14T06:37:32.819+0000] {subprocess.py:93} INFO - [0m06:37:32  26 of 30 PASS unique_dim_pages_page_key ........................................ [[32mPASS[0m in 0.03s]
+[2025-10-14T06:37:32.821+0000] {subprocess.py:93} INFO - [0m06:37:32  28 of 30 START test unique_dim_users_user_id ................................... [RUN]
+[2025-10-14T06:37:32.821+0000] {subprocess.py:93} INFO - [0m06:37:32  24 of 30 PASS relationships_fct_events_user_id__user_id__ref_dim_users_ ........ [[32mPASS[0m in 0.03s]
+[2025-10-14T06:37:32.824+0000] {subprocess.py:93} INFO - [0m06:37:32  29 of 30 START test unique_dim_users_user_key .................................. [RUN]
+[2025-10-14T06:37:32.826+0000] {subprocess.py:93} INFO - [0m06:37:32  30 of 30 START test unique_fct_events_event_key ................................ [RUN]
+[2025-10-14T06:37:32.828+0000] {subprocess.py:93} INFO - [0m06:37:32  27 of 30 PASS unique_dim_pages_page_url ........................................ [[32mPASS[0m in 0.02s]
+[2025-10-14T06:37:32.842+0000] {subprocess.py:93} INFO - [0m06:37:32  28 of 30 PASS unique_dim_users_user_id ......................................... [[32mPASS[0m in 0.02s]
+[2025-10-14T06:37:32.844+0000] {subprocess.py:93} INFO - [0m06:37:32  29 of 30 PASS unique_dim_users_user_key ........................................ [[32mPASS[0m in 0.02s]
+[2025-10-14T06:37:32.845+0000] {subprocess.py:93} INFO - [0m06:37:32  30 of 30 PASS unique_fct_events_event_key ...................................... [[32mPASS[0m in 0.02s]
+[2025-10-14T06:37:32.848+0000] {subprocess.py:93} INFO - [0m06:37:32
+[2025-10-14T06:37:32.848+0000] {subprocess.py:93} INFO - [0m06:37:32  Finished running 30 data tests in 0 hours 0 minutes and 0.32 seconds (0.32s).
+[2025-10-14T06:37:32.878+0000] {subprocess.py:93} INFO - [0m06:37:32
+[2025-10-14T06:37:32.879+0000] {subprocess.py:93} INFO - [0m06:37:32  [32mCompleted successfully[0m
+[2025-10-14T06:37:32.879+0000] {subprocess.py:93} INFO - [0m06:37:32
+[2025-10-14T06:37:32.879+0000] {subprocess.py:93} INFO - [0m06:37:32  Done. PASS=30 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=30
+[2025-10-14T06:37:33.907+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2025-10-14T06:37:33.917+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=events_analytics_pipeline, task_id=dbt_test, execution_date=20251014T063723, start_date=20251014T063731, end_date=20251014T063733
+[2025-10-14T06:37:33.923+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-10-14T06:37:33.931+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

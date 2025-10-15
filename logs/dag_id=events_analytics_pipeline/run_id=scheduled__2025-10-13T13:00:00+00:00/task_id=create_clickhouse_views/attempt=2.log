@@ -1,0 +1,84 @@
+[2025-10-13T14:20:34.371+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: events_analytics_pipeline.create_clickhouse_views scheduled__2025-10-13T13:00:00+00:00 [queued]>
+[2025-10-13T14:20:34.374+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: events_analytics_pipeline.create_clickhouse_views scheduled__2025-10-13T13:00:00+00:00 [queued]>
+[2025-10-13T14:20:34.374+0000] {taskinstance.py:2170} INFO - Starting attempt 2 of 3
+[2025-10-13T14:20:34.378+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): create_clickhouse_views> on 2025-10-13 13:00:00+00:00
+[2025-10-13T14:20:34.381+0000] {standard_task_runner.py:60} INFO - Started process 290 to run task
+[2025-10-13T14:20:34.382+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'events_analytics_pipeline', 'create_clickhouse_views', 'scheduled__2025-10-13T13:00:00+00:00', '--job-id', '43', '--raw', '--subdir', 'DAGS_FOLDER/events_pipeline_dag.py', '--cfg-path', '/tmp/tmphe3enxvv']
+[2025-10-13T14:20:34.383+0000] {standard_task_runner.py:88} INFO - Job 43: Subtask create_clickhouse_views
+[2025-10-13T14:20:34.400+0000] {task_command.py:423} INFO - Running <TaskInstance: events_analytics_pipeline.create_clickhouse_views scheduled__2025-10-13T13:00:00+00:00 [running]> on host 7fd364930f15
+[2025-10-13T14:20:34.422+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data-team' AIRFLOW_CTX_DAG_ID='events_analytics_pipeline' AIRFLOW_CTX_TASK_ID='create_clickhouse_views' AIRFLOW_CTX_EXECUTION_DATE='2025-10-13T13:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-10-13T13:00:00+00:00'
+[2025-10-13T14:20:34.422+0000] {events_pipeline_dag.py:173} INFO - Creating source view...
+[2025-10-13T14:20:34.425+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/events_pipeline_dag.py", line 174, in create_clickhouse_views
+    client.execute("DROP VIEW IF EXISTS events_db.events")
+  File "/home/airflow/.local/lib/python3.11/site-packages/clickhouse_driver/client.py", line 382, in execute
+    rv = self.process_ordinary_query(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/clickhouse_driver/client.py", line 580, in process_ordinary_query
+    return self.receive_result(with_column_types=with_column_types,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/clickhouse_driver/client.py", line 212, in receive_result
+    return result.get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/clickhouse_driver/result.py", line 50, in get_result
+    for packet in self.packet_generator:
+  File "/home/airflow/.local/lib/python3.11/site-packages/clickhouse_driver/client.py", line 228, in packet_generator
+    packet = self.receive_packet()
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/clickhouse_driver/client.py", line 245, in receive_packet
+    raise packet.exception
+clickhouse_driver.errors.ServerException: Code: 80.
+DB::Exception: Table events_db.events is not a View. Stack trace:
+
+0. DB::Exception::Exception(DB::Exception::MessageMasked&&, int, bool) @ 0x0000000011000530
+1. DB::Exception::Exception(String&&, int, String, bool) @ 0x000000000b968d98
+2. DB::Exception::Exception(PreformattedMessage&&, int) @ 0x000000000b968868
+3. DB::Exception::Exception<String>(int, FormatStringHelperImpl<std::type_identity<String>::type>, String&&) @ 0x000000000b968478
+4. DB::InterpreterDropQuery::executeToTableImpl(std::shared_ptr<DB::Context const> const&, DB::ASTDropQuery&, std::shared_ptr<DB::IDatabase>&, StrongTypedef<wide::integer<128ul, unsigned int>, DB::UUIDTag>&) @ 0x000000001533857c
+5. DB::InterpreterDropQuery::executeSingleDropQuery(std::shared_ptr<DB::IAST> const&) @ 0x0000000015332e88
+6. DB::InterpreterDropQuery::execute() @ 0x0000000015332b6c
+7. DB::executeQueryImpl(char const*, char const*, std::shared_ptr<DB::Context>, DB::QueryFlags, DB::QueryProcessingStage::Enum, std::unique_ptr<DB::ReadBuffer, std::default_delete<DB::ReadBuffer>>&, std::shared_ptr<DB::IAST>&, std::shared_ptr<DB::ImplicitTransactionControlExecutor>) @ 0x00000000156ecf6c
+8. DB::executeQuery(String const&, std::shared_ptr<DB::Context>, DB::QueryFlags, DB::QueryProcessingStage::Enum) @ 0x00000000156e83e8
+9. DB::TCPHandler::runImpl() @ 0x0000000016aa2e48
+10. DB::TCPHandler::run() @ 0x0000000016abf468
+11. Poco::Net::TCPServerConnection::start() @ 0x000000001b271198
+12. Poco::Net::TCPServerDispatcher::run() @ 0x000000001b271734
+13. Poco::PooledThread::run() @ 0x000000001b2376dc
+14. Poco::ThreadImpl::runnableEntry(void*) @ 0x000000001b235a50
+15. ? @ 0x0000000000080398
+16. ? @ 0x00000000000e9e9c
+
+[2025-10-13T14:20:34.428+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=events_analytics_pipeline, task_id=create_clickhouse_views, execution_date=20251013T130000, start_date=20251013T142034, end_date=20251013T142034
+[2025-10-13T14:20:34.431+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 43 for task create_clickhouse_views (Code: 80.
+DB::Exception: Table events_db.events is not a View. Stack trace:
+
+0. DB::Exception::Exception(DB::Exception::MessageMasked&&, int, bool) @ 0x0000000011000530
+1. DB::Exception::Exception(String&&, int, String, bool) @ 0x000000000b968d98
+2. DB::Exception::Exception(PreformattedMessage&&, int) @ 0x000000000b968868
+3. DB::Exception::Exception<String>(int, FormatStringHelperImpl<std::type_identity<String>::type>, String&&) @ 0x000000000b968478
+4. DB::InterpreterDropQuery::executeToTableImpl(std::shared_ptr<DB::Context const> const&, DB::ASTDropQuery&, std::shared_ptr<DB::IDatabase>&, StrongTypedef<wide::integer<128ul, unsigned int>, DB::UUIDTag>&) @ 0x000000001533857c
+5. DB::InterpreterDropQuery::executeSingleDropQuery(std::shared_ptr<DB::IAST> const&) @ 0x0000000015332e88
+6. DB::InterpreterDropQuery::execute() @ 0x0000000015332b6c
+7. DB::executeQueryImpl(char const*, char const*, std::shared_ptr<DB::Context>, DB::QueryFlags, DB::QueryProcessingStage::Enum, std::unique_ptr<DB::ReadBuffer, std::default_delete<DB::ReadBuffer>>&, std::shared_ptr<DB::IAST>&, std::shared_ptr<DB::ImplicitTransactionControlExecutor>) @ 0x00000000156ecf6c
+8. DB::executeQuery(String const&, std::shared_ptr<DB::Context>, DB::QueryFlags, DB::QueryProcessingStage::Enum) @ 0x00000000156e83e8
+9. DB::TCPHandler::runImpl() @ 0x0000000016aa2e48
+10. DB::TCPHandler::run() @ 0x0000000016abf468
+11. Poco::Net::TCPServerConnection::start() @ 0x000000001b271198
+12. Poco::Net::TCPServerDispatcher::run() @ 0x000000001b271734
+13. Poco::PooledThread::run() @ 0x000000001b2376dc
+14. Poco::ThreadImpl::runnableEntry(void*) @ 0x000000001b235a50
+15. ? @ 0x0000000000080398
+16. ? @ 0x00000000000e9e9c
+; 290)
+[2025-10-13T14:20:34.440+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-10-13T14:20:34.448+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

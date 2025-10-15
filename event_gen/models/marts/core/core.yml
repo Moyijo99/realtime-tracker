@@ -1,0 +1,118 @@
+version: 2
+
+models:
+  - name: dim_users
+    description: "User dimension table with aggregated metrics"
+    columns:
+      - name: user_key
+        description: "Surrogate key for user dimension"
+        tests:
+          - not_null
+          - unique
+
+      - name: user_id
+        description: "Natural key - user identifier"
+        tests:
+          - not_null
+          - unique
+
+      - name: username
+        description: "Username"
+        tests:
+          - not_null
+
+      - name: first_event_at
+        description: "Timestamp of user's first event"
+        tests:
+          - not_null
+
+      - name: total_events
+        description: "Total number of events for user"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+
+      - name: days_active
+        description: "Number of unique days user was active"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 1"
+
+  - name: dim_pages
+    description: "Page dimension table with aggregated metrics"
+    columns:
+      - name: page_key
+        description: "Surrogate key for page dimension"
+        tests:
+          - not_null
+          - unique
+
+      - name: page_url
+        description: "Full URL of the page"
+        tests:
+          - not_null
+          - unique
+
+      - name: domain
+        description: "Domain extracted from URL"
+        tests:
+          - not_null
+
+      - name: total_events
+        description: "Total events on this page"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+
+      - name: unique_visitors
+        description: "Number of unique users visiting page"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 1"
+
+  - name: fct_events
+    description: "Fact table containing all events with dimension keys"
+    columns:
+      - name: event_key
+        description: "Primary key - event identifier"
+        tests:
+          - not_null
+          - unique
+
+      - name: user_id
+        description: "Foreign key to dim_users"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_users')
+              field: user_id
+
+      - name: page_url
+        description: "Foreign key to dim_pages"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_pages')
+              field: page_url
+
+      - name: event_type
+        description: "Type of event"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['page_view', 'click', 'scroll', 'form_submit', 'button_click']
+              quote: true  # Enable quoting for ClickHouse compatibility
+
+      - name: event_timestamp
+        description: "When the event occurred"
+        tests:
+          - not_null
+          
+      - name: event_date
+        description: "Date of the event"
+        tests:
+          - not_null

@@ -1,0 +1,54 @@
+[2025-10-12T21:00:01.864+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: events_analytics_pipeline.extract_and_load_to_clickhouse scheduled__2025-10-12T20:00:00+00:00 [queued]>
+[2025-10-12T21:00:01.868+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: events_analytics_pipeline.extract_and_load_to_clickhouse scheduled__2025-10-12T20:00:00+00:00 [queued]>
+[2025-10-12T21:00:01.869+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-10-12T21:00:01.876+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): extract_and_load_to_clickhouse> on 2025-10-12 20:00:00+00:00
+[2025-10-12T21:00:01.879+0000] {standard_task_runner.py:60} INFO - Started process 463 to run task
+[2025-10-12T21:00:01.881+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'events_analytics_pipeline', 'extract_and_load_to_clickhouse', 'scheduled__2025-10-12T20:00:00+00:00', '--job-id', '30', '--raw', '--subdir', 'DAGS_FOLDER/events_pipeline_dag.py', '--cfg-path', '/tmp/tmp7dk6d9_f']
+[2025-10-12T21:00:01.883+0000] {standard_task_runner.py:88} INFO - Job 30: Subtask extract_and_load_to_clickhouse
+[2025-10-12T21:00:01.906+0000] {task_command.py:423} INFO - Running <TaskInstance: events_analytics_pipeline.extract_and_load_to_clickhouse scheduled__2025-10-12T20:00:00+00:00 [running]> on host 33426d0e8621
+[2025-10-12T21:00:01.935+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data-team' AIRFLOW_CTX_DAG_ID='events_analytics_pipeline' AIRFLOW_CTX_TASK_ID='extract_and_load_to_clickhouse' AIRFLOW_CTX_EXECUTION_DATE='2025-10-12T20:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-10-12T20:00:00+00:00'
+[2025-10-12T21:00:01.936+0000] {events_pipeline_dag.py:80} INFO - Connecting to PostgreSQL...
+[2025-10-12T21:00:01.937+0000] {events_pipeline_dag.py:84} INFO - Extracting data from PostgreSQL...
+[2025-10-12T21:00:02.282+0000] {events_pipeline_dag.py:92} INFO - Extracted 21300 rows from PostgreSQL
+[2025-10-12T21:00:02.283+0000] {events_pipeline_dag.py:95} INFO - Connecting to ClickHouse...
+[2025-10-12T21:00:02.283+0000] {events_pipeline_dag.py:99} INFO - Clearing existing data...
+[2025-10-12T21:00:02.286+0000] {events_pipeline_dag.py:103} INFO - Loading data into ClickHouse...
+[2025-10-12T21:00:02.302+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/events_pipeline_dag.py", line 106, in extract_and_load_to_clickhouse
+    client.execute(
+  File "/home/airflow/.local/lib/python3.11/site-packages/clickhouse_driver/client.py", line 376, in execute
+    rv = self.process_insert_query(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/clickhouse_driver/client.py", line 607, in process_insert_query
+    rv = self.send_data(sample_block, data,
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/clickhouse_driver/client.py", line 660, in send_data
+    self.connection.send_data(block)
+  File "/home/airflow/.local/lib/python3.11/site-packages/clickhouse_driver/connection.py", line 688, in send_data
+    self.block_out.write(block)
+  File "/home/airflow/.local/lib/python3.11/site-packages/clickhouse_driver/streams/native.py", line 48, in write
+    write_column(self.context, col_name, col_type, items,
+  File "/home/airflow/.local/lib/python3.11/site-packages/clickhouse_driver/columns/service.py", line 167, in write_column
+    column.write_data(items, buf)
+  File "/home/airflow/.local/lib/python3.11/site-packages/clickhouse_driver/columns/base.py", line 145, in write_data
+    self._write_data(items, buf)
+  File "/home/airflow/.local/lib/python3.11/site-packages/clickhouse_driver/columns/base.py", line 149, in _write_data
+    self.write_items(prepared, buf)
+  File "/home/airflow/.local/lib/python3.11/site-packages/clickhouse_driver/columns/stringcolumn.py", line 18, in write_items
+    buf.write_strings(items, encoding=self.encoding)
+  File "clickhouse_driver/bufferedwriter.pyx", line 54, in clickhouse_driver.bufferedwriter.BufferedWriter.write_strings
+AttributeError: 'UUID' object has no attribute 'encode'
+[2025-10-12T21:00:02.309+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=events_analytics_pipeline, task_id=extract_and_load_to_clickhouse, execution_date=20251012T200000, start_date=20251012T210001, end_date=20251012T210002
+[2025-10-12T21:00:02.315+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 30 for task extract_and_load_to_clickhouse ('UUID' object has no attribute 'encode'; 463)
+[2025-10-12T21:00:02.360+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-10-12T21:00:02.372+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

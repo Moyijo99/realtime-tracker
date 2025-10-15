@@ -1,0 +1,48 @@
+[2025-10-14T06:07:21.989+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: events_analytics_pipeline.dbt_run manual__2025-10-14T06:07:17.987288+00:00 [queued]>
+[2025-10-14T06:07:21.991+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: events_analytics_pipeline.dbt_run manual__2025-10-14T06:07:17.987288+00:00 [queued]>
+[2025-10-14T06:07:21.992+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-10-14T06:07:21.996+0000] {taskinstance.py:2191} INFO - Executing <Task(BashOperator): dbt_run> on 2025-10-14 06:07:17.987288+00:00
+[2025-10-14T06:07:21.998+0000] {standard_task_runner.py:60} INFO - Started process 353 to run task
+[2025-10-14T06:07:22.000+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'events_analytics_pipeline', 'dbt_run', 'manual__2025-10-14T06:07:17.987288+00:00', '--job-id', '61', '--raw', '--subdir', 'DAGS_FOLDER/events_pipeline_dag.py', '--cfg-path', '/tmp/tmpvvocb72_']
+[2025-10-14T06:07:22.002+0000] {standard_task_runner.py:88} INFO - Job 61: Subtask dbt_run
+[2025-10-14T06:07:22.020+0000] {task_command.py:423} INFO - Running <TaskInstance: events_analytics_pipeline.dbt_run manual__2025-10-14T06:07:17.987288+00:00 [running]> on host 7fd364930f15
+[2025-10-14T06:07:22.044+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data-team' AIRFLOW_CTX_DAG_ID='events_analytics_pipeline' AIRFLOW_CTX_TASK_ID='dbt_run' AIRFLOW_CTX_EXECUTION_DATE='2025-10-14T06:07:17.987288+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-14T06:07:17.987288+00:00'
+[2025-10-14T06:07:22.046+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-10-14T06:07:22.046+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'cd /opt/***/event_gen && /home/***/.local/bin/dbt run --profiles-dir /opt/***/.dbt --project-dir /opt/***/event_gen']
+[2025-10-14T06:07:22.054+0000] {subprocess.py:86} INFO - Output:
+[2025-10-14T06:07:22.950+0000] {subprocess.py:93} INFO - [0m06:07:22  Running with dbt=1.10.13
+[2025-10-14T06:07:23.120+0000] {subprocess.py:93} INFO - [0m06:07:23  Registered adapter: clickhouse=1.9.4
+[2025-10-14T06:07:23.209+0000] {subprocess.py:93} INFO - [0m06:07:23  Unable to do partial parsing because of a version mismatch
+[2025-10-14T06:07:23.832+0000] {subprocess.py:93} INFO - [0m06:07:23  [[33mWARNING[0m][MissingArgumentsPropertyInGenericTestDeprecation]: Deprecated
+[2025-10-14T06:07:23.833+0000] {subprocess.py:93} INFO - functionality
+[2025-10-14T06:07:23.833+0000] {subprocess.py:93} INFO - Found top-level arguments to test `dbt_utils.expression_is_true`. Arguments to
+[2025-10-14T06:07:23.833+0000] {subprocess.py:93} INFO - generic tests should be nested under the `arguments` property.`
+[2025-10-14T06:07:24.008+0000] {subprocess.py:93} INFO - [0m06:07:24  Found 4 models, 31 data tests, 1 source, 599 macros
+[2025-10-14T06:07:24.009+0000] {subprocess.py:93} INFO - [0m06:07:24
+[2025-10-14T06:07:24.009+0000] {subprocess.py:93} INFO - [0m06:07:24  Concurrency: 4 threads (target='dev')
+[2025-10-14T06:07:24.010+0000] {subprocess.py:93} INFO - [0m06:07:24
+[2025-10-14T06:07:24.149+0000] {subprocess.py:93} INFO - [0m06:07:24  1 of 4 START sql view model `analytics`.`stg_events` ........................... [RUN]
+[2025-10-14T06:07:24.196+0000] {subprocess.py:93} INFO - [0m06:07:24  1 of 4 OK created sql view model `analytics`.`stg_events` ...................... [[32mOK[0m in 0.05s]
+[2025-10-14T06:07:24.198+0000] {subprocess.py:93} INFO - [0m06:07:24  2 of 4 START sql table model `analytics`.`dim_pages` ........................... [RUN]
+[2025-10-14T06:07:24.199+0000] {subprocess.py:93} INFO - [0m06:07:24  3 of 4 START sql table model `analytics`.`dim_users` ........................... [RUN]
+[2025-10-14T06:07:24.199+0000] {subprocess.py:93} INFO - [0m06:07:24  4 of 4 START sql table model `analytics`.`fct_events` .......................... [RUN]
+[2025-10-14T06:07:24.367+0000] {subprocess.py:93} INFO - [0m06:07:24  4 of 4 OK created sql table model `analytics`.`fct_events` ..................... [[32mOK[0m in 0.17s]
+[2025-10-14T06:07:24.379+0000] {subprocess.py:93} INFO - [0m06:07:24  2 of 4 OK created sql table model `analytics`.`dim_pages` ...................... [[32mOK[0m in 0.18s]
+[2025-10-14T06:07:24.393+0000] {subprocess.py:93} INFO - [0m06:07:24  3 of 4 OK created sql table model `analytics`.`dim_users` ...................... [[32mOK[0m in 0.19s]
+[2025-10-14T06:07:24.398+0000] {subprocess.py:93} INFO - [0m06:07:24
+[2025-10-14T06:07:24.398+0000] {subprocess.py:93} INFO - [0m06:07:24  Finished running 3 table models, 1 view model in 0 hours 0 minutes and 0.39 seconds (0.39s).
+[2025-10-14T06:07:24.434+0000] {subprocess.py:93} INFO - [0m06:07:24
+[2025-10-14T06:07:24.435+0000] {subprocess.py:93} INFO - [0m06:07:24  [32mCompleted successfully[0m
+[2025-10-14T06:07:24.435+0000] {subprocess.py:93} INFO - [0m06:07:24
+[2025-10-14T06:07:24.436+0000] {subprocess.py:93} INFO - [0m06:07:24  Done. PASS=4 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=4
+[2025-10-14T06:07:24.436+0000] {subprocess.py:93} INFO - [0m06:07:24  [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+[2025-10-14T06:07:24.437+0000] {subprocess.py:93} INFO - Summary of encountered deprecations:
+[2025-10-14T06:07:24.437+0000] {subprocess.py:93} INFO - - MissingArgumentsPropertyInGenericTestDeprecation: 7 occurrences
+[2025-10-14T06:07:24.437+0000] {subprocess.py:93} INFO - To see all deprecation instances instead of just the first occurrence of each,
+[2025-10-14T06:07:24.437+0000] {subprocess.py:93} INFO - run command again with the `--show-all-deprecations` flag. You may also need to
+[2025-10-14T06:07:24.438+0000] {subprocess.py:93} INFO - run with `--no-partial-parse` as some deprecations are only encountered during
+[2025-10-14T06:07:24.438+0000] {subprocess.py:93} INFO - parsing.
+[2025-10-14T06:07:25.881+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2025-10-14T06:07:25.896+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=events_analytics_pipeline, task_id=dbt_run, execution_date=20251014T060717, start_date=20251014T060721, end_date=20251014T060725
+[2025-10-14T06:07:25.930+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-10-14T06:07:25.945+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

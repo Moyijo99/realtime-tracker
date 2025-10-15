@@ -1,0 +1,215 @@
+[0m23:23:19.441985 [debug] [MainThread]: Got an exception trying to initialize tracking
+
+
+============================== 23:23:19.455813 | bd060ca0-bf33-4c5f-bac4-81f704884af1 ==============================
+[0m23:23:19.455813 [info ] [MainThread]: Running with dbt=1.10.13
+[0m23:23:19.456261 [debug] [MainThread]: running dbt with arguments {'warn_error': 'None', 'version_check': 'True', 'fail_fast': 'False', 'partial_parse': 'True', 'quiet': 'False', 'static_parser': 'True', 'target_path': 'None', 'log_cache_events': 'False', 'use_colors': 'True', 'no_print': 'None', 'profiles_dir': '/Users/fatimayakubu/.dbt', 'use_experimental_parser': 'False', 'cache_selected_only': 'False', 'indirect_selection': 'eager', 'log_format': 'default', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'debug': 'False', 'log_path': 'logs', 'invocation_command': 'dbt init event_gen', 'send_anonymous_usage_stats': 'True', 'empty': 'None', 'introspect': 'True', 'write_json': 'True', 'printer_width': '80'}
+[0m23:23:19.462231 [debug] [MainThread]: Starter project path: /Users/fatimayakubu/realtime-tracker/venv/lib/python3.13/site-packages/dbt/include/starter_project
+[0m23:23:19.464402 [info ] [MainThread]: 
+Your new dbt project "event_gen" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m23:23:19.464581 [info ] [MainThread]: Setting up your profile.
+[0m23:27:07.312711 [info ] [MainThread]: Profile event_gen written to /Users/fatimayakubu/.dbt/profiles.yml using target's profile_template.yml and your supplied values. Run 'dbt debug' to validate the connection.
+[0m23:27:07.325593 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 227.89954, "process_in_blocks": "0", "process_kernel_time": 0.12759, "process_mem_max_rss": "110526464", "process_out_blocks": "0", "process_user_time": 0.66437}
+[0m23:27:07.326270 [debug] [MainThread]: Command `dbt init` succeeded at 23:27:07.326143 after 227.90 seconds
+[0m23:27:07.326615 [debug] [MainThread]: Flushing usage events
+[0m23:27:16.630498 [debug] [MainThread]: Got an exception trying to initialize tracking
+
+
+============================== 23:27:16.640121 | 6090cfc3-8cbd-4913-8214-2231d10a3949 ==============================
+[0m23:27:16.640121 [info ] [MainThread]: Running with dbt=1.10.13
+[0m23:27:16.640522 [debug] [MainThread]: running dbt with arguments {'indirect_selection': 'eager', 'empty': 'None', 'partial_parse': 'True', 'introspect': 'True', 'profiles_dir': '/Users/fatimayakubu/.dbt', 'log_format': 'default', 'log_path': 'logs', 'use_colors': 'True', 'quiet': 'False', 'write_json': 'True', 'warn_error': 'None', 'fail_fast': 'False', 'target_path': 'None', 'version_check': 'True', 'debug': 'False', 'static_parser': 'True', 'no_print': 'None', 'invocation_command': 'dbt debug', 'cache_selected_only': 'False', 'log_cache_events': 'False', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'use_experimental_parser': 'False', 'send_anonymous_usage_stats': 'True', 'printer_width': '80'}
+[0m23:27:16.646648 [info ] [MainThread]: dbt version: 1.10.13
+[0m23:27:16.646835 [info ] [MainThread]: python version: 3.13.7
+[0m23:27:16.647000 [info ] [MainThread]: python path: /Users/fatimayakubu/realtime-tracker/venv/bin/python3.13
+[0m23:27:16.647110 [info ] [MainThread]: os info: macOS-15.3.2-arm64-arm-64bit-Mach-O
+[0m23:27:16.666063 [info ] [MainThread]: Using profiles dir at /Users/fatimayakubu/.dbt
+[0m23:27:16.666239 [info ] [MainThread]: Using profiles.yml file at /Users/fatimayakubu/.dbt/profiles.yml
+[0m23:27:16.666364 [info ] [MainThread]: Using dbt_project.yml file at /Users/fatimayakubu/realtime-tracker/dbt_project.yml
+[0m23:27:16.666733 [info ] [MainThread]: adapter type: postgres
+[0m23:27:16.666854 [info ] [MainThread]: adapter version: 1.9.1
+[0m23:27:16.666981 [info ] [MainThread]: Configuration:
+[0m23:27:16.667073 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m23:27:16.667172 [info ] [MainThread]:   dbt_project.yml file [[31mERROR not found[0m]
+[0m23:27:16.667269 [info ] [MainThread]: Required dependencies:
+[0m23:27:16.667398 [debug] [MainThread]: Executing "git --help"
+[0m23:27:16.679722 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]\n           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n           [--super-prefix=<path>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone     Clone a repository into a new directory\n   init      Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add       Add file contents to the index\n   mv        Move or rename a file, a directory, or a symlink\n   restore   Restore working tree files\n   rm        Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect    Use binary search to find the commit that introduced a bug\n   diff      Show changes between commits, commit and working tree, etc\n   grep      Print lines matching a pattern\n   log       Show commit logs\n   show      Show various types of objects\n   status    Show the working tree status\n\ngrow, mark and tweak your common history\n   branch    List, create, or delete branches\n   commit    Record changes to the repository\n   merge     Join two or more development histories together\n   rebase    Reapply commits on top of another base tip\n   reset     Reset current HEAD to the specified state\n   switch    Switch branches\n   tag       Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch     Download objects and refs from another repository\n   pull      Fetch from and integrate with another repository or a local branch\n   push      Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m23:27:16.680111 [debug] [MainThread]: STDERR: "b''"
+[0m23:27:16.680233 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m23:27:16.680348 [info ] [MainThread]: Connection:
+[0m23:27:16.680482 [info ] [MainThread]:   host: localhost
+[0m23:27:16.680577 [info ] [MainThread]:   port: 5432
+[0m23:27:16.680669 [info ] [MainThread]:   user: postgres
+[0m23:27:16.680769 [info ] [MainThread]:   database: events
+[0m23:27:16.680865 [info ] [MainThread]:   schema: dbt
+[0m23:27:16.680957 [info ] [MainThread]:   connect_timeout: 10
+[0m23:27:16.681055 [info ] [MainThread]:   role: None
+[0m23:27:16.681148 [info ] [MainThread]:   search_path: None
+[0m23:27:16.681242 [info ] [MainThread]:   keepalives_idle: 0
+[0m23:27:16.681336 [info ] [MainThread]:   sslmode: None
+[0m23:27:16.681428 [info ] [MainThread]:   sslcert: None
+[0m23:27:16.681516 [info ] [MainThread]:   sslkey: None
+[0m23:27:16.681609 [info ] [MainThread]:   sslrootcert: None
+[0m23:27:16.681694 [info ] [MainThread]:   application_name: dbt
+[0m23:27:16.681778 [info ] [MainThread]:   retries: 1
+[0m23:27:16.682012 [info ] [MainThread]: Registered adapter: postgres=1.9.1
+[0m23:27:16.716661 [debug] [MainThread]: Acquiring new postgres connection 'debug'
+[0m23:27:16.733195 [debug] [MainThread]: Using postgres connection "debug"
+[0m23:27:16.733322 [debug] [MainThread]: On debug: select 1 as id
+[0m23:27:16.733413 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m23:27:16.759573 [debug] [MainThread]: SQL status: SELECT 1 in 0.026 seconds
+[0m23:27:16.759988 [debug] [MainThread]: On debug: Close
+[0m23:27:16.760116 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m23:27:16.760242 [info ] [MainThread]: [31m1 check failed:[0m
+[0m23:27:16.760340 [info ] [MainThread]: Project loading failed for the following reason:
+ project path </Users/fatimayakubu/realtime-tracker/dbt_project.yml> not found
+
+[0m23:27:16.760916 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": false, "command_wall_clock_time": 0.14659034, "process_in_blocks": "0", "process_kernel_time": 0.095732, "process_mem_max_rss": "119062528", "process_out_blocks": "0", "process_user_time": 0.479578}
+[0m23:27:16.761082 [debug] [MainThread]: Command `dbt debug` failed at 23:27:16.761047 after 0.15 seconds
+[0m23:27:16.761195 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m23:27:16.761299 [debug] [MainThread]: Flushing usage events
+[0m17:07:30.958899 [debug] [MainThread]: Got an exception trying to initialize tracking
+
+
+============================== 17:07:30.969593 | 2a4441b8-4a0c-4ebc-8629-1559c0c58008 ==============================
+[0m17:07:30.969593 [info ] [MainThread]: Running with dbt=1.11.0-b3
+[0m17:07:30.970015 [debug] [MainThread]: running dbt with arguments {'write_json': 'True', 'no_print': 'None', 'log_path': 'logs', 'fail_fast': 'False', 'partial_parse': 'True', 'indirect_selection': 'eager', 'use_colors': 'True', 'empty': 'None', 'quiet': 'False', 'use_experimental_parser': 'False', 'version_check': 'True', 'debug': 'False', 'send_anonymous_usage_stats': 'True', 'warn_error': 'None', 'target_path': 'None', 'invocation_command': 'dbt init event_gen', 'introspect': 'True', 'log_format': 'default', 'log_cache_events': 'False', 'cache_selected_only': 'False', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'static_parser': 'True', 'profiles_dir': '/Users/fatimayakubu/.dbt', 'printer_width': '80'}
+[0m17:07:30.977243 [debug] [MainThread]: Starter project path: /Users/fatimayakubu/realtime-tracker/venv/lib/python3.13/site-packages/dbt/include/starter_project
+[0m17:07:30.980645 [info ] [MainThread]: 
+Your new dbt project "event_gen" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m17:07:30.980790 [info ] [MainThread]: Setting up your profile.
+[0m17:10:10.717766 [info ] [MainThread]: Profile event_gen written to /Users/fatimayakubu/.dbt/profiles.yml using target's profile_template.yml and your supplied values. Run 'dbt debug' to validate the connection.
+[0m17:10:10.735712 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 159.79613, "process_in_blocks": "0", "process_kernel_time": 0.153246, "process_mem_max_rss": "190021632", "process_out_blocks": "0", "process_user_time": 0.668306}
+[0m17:10:10.736845 [debug] [MainThread]: Command `dbt init` succeeded at 17:10:10.736722 after 159.80 seconds
+[0m17:10:10.737142 [debug] [MainThread]: Flushing usage events
+[0m17:10:21.062405 [debug] [MainThread]: Got an exception trying to initialize tracking
+
+
+============================== 17:10:21.073027 | d57cf461-c86e-4c03-ac32-b0cf8ad98186 ==============================
+[0m17:10:21.073027 [info ] [MainThread]: Running with dbt=1.11.0-b3
+[0m17:10:21.073437 [debug] [MainThread]: running dbt with arguments {'log_cache_events': 'False', 'target_path': 'None', 'write_json': 'True', 'log_path': 'logs', 'cache_selected_only': 'False', 'empty': 'None', 'printer_width': '80', 'introspect': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'use_colors': 'True', 'log_format': 'default', 'send_anonymous_usage_stats': 'True', 'invocation_command': 'dbt debug', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'indirect_selection': 'eager', 'fail_fast': 'False', 'version_check': 'True', 'profiles_dir': '/Users/fatimayakubu/.dbt', 'debug': 'False', 'static_parser': 'True'}
+[0m17:10:21.079702 [info ] [MainThread]: dbt version: 1.11.0-b3
+[0m17:10:21.079860 [info ] [MainThread]: python version: 3.13.7
+[0m17:10:21.079969 [info ] [MainThread]: python path: /Users/fatimayakubu/realtime-tracker/venv/bin/python3.13
+[0m17:10:21.080073 [info ] [MainThread]: os info: macOS-15.3.2-arm64-arm-64bit-Mach-O
+[0m17:10:21.406352 [info ] [MainThread]: Using profiles dir at /Users/fatimayakubu/.dbt
+[0m17:10:21.406578 [info ] [MainThread]: Using profiles.yml file at /Users/fatimayakubu/.dbt/profiles.yml
+[0m17:10:21.406693 [info ] [MainThread]: Using dbt_project.yml file at /Users/fatimayakubu/realtime-tracker/dbt_project.yml
+[0m17:10:21.406937 [info ] [MainThread]: adapter type: snowflake
+[0m17:10:21.407044 [info ] [MainThread]: adapter version: 1.10.2
+[0m17:10:21.407151 [info ] [MainThread]: Configuration:
+[0m17:10:21.407246 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m17:10:21.407341 [info ] [MainThread]:   dbt_project.yml file [[31mERROR not found[0m]
+[0m17:10:21.407437 [info ] [MainThread]: Required dependencies:
+[0m17:10:21.407562 [debug] [MainThread]: Executing "git --help"
+[0m17:10:21.428284 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]\n           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n           [--super-prefix=<path>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone     Clone a repository into a new directory\n   init      Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add       Add file contents to the index\n   mv        Move or rename a file, a directory, or a symlink\n   restore   Restore working tree files\n   rm        Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect    Use binary search to find the commit that introduced a bug\n   diff      Show changes between commits, commit and working tree, etc\n   grep      Print lines matching a pattern\n   log       Show commit logs\n   show      Show various types of objects\n   status    Show the working tree status\n\ngrow, mark and tweak your common history\n   branch    List, create, or delete branches\n   commit    Record changes to the repository\n   merge     Join two or more development histories together\n   rebase    Reapply commits on top of another base tip\n   reset     Reset current HEAD to the specified state\n   switch    Switch branches\n   tag       Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch     Download objects and refs from another repository\n   pull      Fetch from and integrate with another repository or a local branch\n   push      Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m17:10:21.428689 [debug] [MainThread]: STDERR: "b''"
+[0m17:10:21.428804 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m17:10:21.428922 [info ] [MainThread]: Connection:
+[0m17:10:21.429048 [info ] [MainThread]:   account: YLIQOKR-DH67174
+[0m17:10:21.429143 [info ] [MainThread]:   user: MOYIJOBALA
+[0m17:10:21.429229 [info ] [MainThread]:   database: EVENTS_DB
+[0m17:10:21.429326 [info ] [MainThread]:   warehouse: COMPUTE_WH
+[0m17:10:21.429407 [info ] [MainThread]:   role: ACCOUNTADMIN
+[0m17:10:21.429491 [info ] [MainThread]:   schema: ANALYTICS,STAGING,PUBLIC
+[0m17:10:21.429580 [info ] [MainThread]:   authenticator: None
+[0m17:10:21.429664 [info ] [MainThread]:   oauth_client_id: None
+[0m17:10:21.429746 [info ] [MainThread]:   query_tag: None
+[0m17:10:21.429832 [info ] [MainThread]:   client_session_keep_alive: False
+[0m17:10:21.429916 [info ] [MainThread]:   host: None
+[0m17:10:21.430001 [info ] [MainThread]:   port: None
+[0m17:10:21.430082 [info ] [MainThread]:   proxy_host: None
+[0m17:10:21.430171 [info ] [MainThread]:   proxy_port: None
+[0m17:10:21.430253 [info ] [MainThread]:   protocol: None
+[0m17:10:21.430336 [info ] [MainThread]:   connect_retries: 1
+[0m17:10:21.430419 [info ] [MainThread]:   connect_timeout: None
+[0m17:10:21.430502 [info ] [MainThread]:   retry_on_database_errors: False
+[0m17:10:21.430585 [info ] [MainThread]:   retry_all: False
+[0m17:10:21.430670 [info ] [MainThread]:   insecure_mode: False
+[0m17:10:21.430754 [info ] [MainThread]:   reuse_connections: True
+[0m17:10:21.430838 [info ] [MainThread]:   s3_stage_vpce_dns_name: None
+[0m17:10:21.431085 [info ] [MainThread]: Registered adapter: snowflake=1.10.2
+[0m17:10:21.485535 [debug] [MainThread]: Acquiring new snowflake connection 'debug'
+[0m17:10:21.503187 [debug] [MainThread]: Using snowflake connection "debug"
+[0m17:10:21.503331 [debug] [MainThread]: On debug: select 1 as id
+[0m17:10:21.503427 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m17:10:25.027689 [debug] [MainThread]: SQL status: SUCCESS 1 in 3.524 seconds
+[0m17:10:25.029921 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m17:10:25.030607 [info ] [MainThread]: [31m1 check failed:[0m
+[0m17:10:25.030993 [info ] [MainThread]: Project loading failed for the following reason:
+ project path </Users/fatimayakubu/realtime-tracker/dbt_project.yml> not found
+
+[0m17:10:25.034521 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": false, "command_wall_clock_time": 3.9894133, "process_in_blocks": "0", "process_kernel_time": 0.193599, "process_mem_max_rss": "226525184", "process_out_blocks": "0", "process_user_time": 0.911271}
+[0m17:10:25.035374 [debug] [MainThread]: Command `dbt debug` failed at 17:10:25.035228 after 3.99 seconds
+[0m17:10:25.035808 [debug] [MainThread]: Connection 'debug' was left open.
+[0m17:10:25.036091 [debug] [MainThread]: On debug: Close
+[0m17:10:25.693652 [debug] [MainThread]: Flushing usage events
+[0m20:45:43.111449 [debug] [MainThread]: Got an exception trying to initialize tracking
+
+
+============================== 20:45:43.122924 | b71d5be3-b8d2-4ed3-895e-a37364e3b9ae ==============================
+[0m20:45:43.122924 [info ] [MainThread]: Running with dbt=1.11.0-b3
+[0m20:45:43.123421 [debug] [MainThread]: running dbt with arguments {'introspect': 'True', 'invocation_command': 'dbt run', 'quiet': 'False', 'cache_selected_only': 'False', 'log_cache_events': 'False', 'write_json': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'indirect_selection': 'eager', 'log_format': 'default', 'log_path': 'logs', 'partial_parse': 'True', 'debug': 'False', 'use_colors': 'True', 'printer_width': '80', 'empty': 'False', 'warn_error': 'None', 'profiles_dir': '/Users/fatimayakubu/.dbt', 'version_check': 'True', 'no_print': 'None', 'fail_fast': 'False', 'target_path': 'None', 'send_anonymous_usage_stats': 'True', 'use_experimental_parser': 'False', 'static_parser': 'True'}
+[0m20:45:43.123706 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /Users/fatimayakubu/realtime-tracker/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m20:45:43.124740 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 0.031527165, "process_in_blocks": "0", "process_kernel_time": 0.078579, "process_mem_max_rss": "104644608", "process_out_blocks": "0", "process_user_time": 0.458896}
+[0m20:45:43.124979 [debug] [MainThread]: Command `dbt run` failed at 20:45:43.124938 after 0.03 seconds
+[0m20:45:43.125111 [debug] [MainThread]: Flushing usage events
+[0m01:11:53.039379 [debug] [MainThread]: Got an exception trying to initialize tracking
+
+
+============================== 01:11:53.061748 | 85ac1003-45a9-4e6d-a274-6f77ded19ae5 ==============================
+[0m01:11:53.061748 [info ] [MainThread]: Running with dbt=1.11.0-b3
+[0m01:11:53.062262 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'profiles_dir': '/Users/fatimayakubu/.dbt', 'introspect': 'True', 'debug': 'False', 'partial_parse': 'True', 'invocation_command': 'dbt debug --config-dir', 'send_anonymous_usage_stats': 'True', 'log_path': 'logs', 'log_cache_events': 'False', 'empty': 'None', 'fail_fast': 'False', 'write_json': 'True', 'indirect_selection': 'eager', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'no_print': 'None', 'use_colors': 'True', 'cache_selected_only': 'False', 'use_experimental_parser': 'False', 'printer_width': '80', 'warn_error': 'None', 'quiet': 'False', 'version_check': 'True', 'log_format': 'default'}
+[0m01:11:53.071830 [info ] [MainThread]: To view your profiles.yml file, run:
+
+open /Users/fatimayakubu/.dbt
+[0m01:11:53.081270 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": true, "command_wall_clock_time": 0.065201, "process_in_blocks": "0", "process_kernel_time": 0.120958, "process_mem_max_rss": "107970560", "process_out_blocks": "0", "process_user_time": 0.540724}
+[0m01:11:53.081616 [debug] [MainThread]: Command `dbt debug` succeeded at 01:11:53.081558 after 0.07 seconds
+[0m01:11:53.081777 [debug] [MainThread]: Flushing usage events
+[0m01:33:41.058003 [debug] [MainThread]: Got an exception trying to initialize tracking
+
+
+============================== 01:33:41.072099 | 906d7079-106f-4b8a-8d7b-70fa9f1ede3d ==============================
+[0m01:33:41.072099 [info ] [MainThread]: Running with dbt=1.11.0-b3
+[0m01:33:41.072503 [debug] [MainThread]: running dbt with arguments {'log_path': 'logs', 'warn_error': 'None', 'profiles_dir': '/Users/fatimayakubu/.dbt', 'send_anonymous_usage_stats': 'True', 'fail_fast': 'False', 'partial_parse': 'True', 'log_cache_events': 'False', 'write_json': 'True', 'static_parser': 'True', 'quiet': 'False', 'target_path': 'None', 'use_experimental_parser': 'False', 'use_colors': 'True', 'indirect_selection': 'eager', 'invocation_command': 'dbt debug --config-dir', 'log_format': 'default', 'debug': 'False', 'cache_selected_only': 'False', 'introspect': 'True', 'empty': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'no_print': 'None', 'version_check': 'True', 'printer_width': '80'}
+[0m01:33:41.080494 [info ] [MainThread]: To view your profiles.yml file, run:
+
+open /Users/fatimayakubu/.dbt
+[0m01:33:41.081786 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": true, "command_wall_clock_time": 0.04096971, "process_in_blocks": "0", "process_kernel_time": 0.089819, "process_mem_max_rss": "107200512", "process_out_blocks": "0", "process_user_time": 0.476747}
+[0m01:33:41.082063 [debug] [MainThread]: Command `dbt debug` succeeded at 01:33:41.082015 after 0.04 seconds
+[0m01:33:41.082214 [debug] [MainThread]: Flushing usage events
