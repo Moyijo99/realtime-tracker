@@ -10,6 +10,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 from clickhouse_driver import Client
 import logging
+import os
 
 default_args = {
     'owner': 'data-team',
@@ -62,7 +63,8 @@ def extract_and_load_to_clickhouse(**context):
     """Extract data from PostgreSQL and load into ClickHouse"""
     logger = logging.getLogger(__name__)
     
-    pg_conn_string = "postgresql+psycopg2://airflow:airflow@postgres:5432/airflow"
+    # Use environment variables for connection
+    pg_conn_string = f"postgresql+psycopg2://{os.getenv('POSTGRES_USER', 'airflow')}:{os.getenv('POSTGRES_PASSWORD', 'airflow')}@{os.getenv('POSTGRES_HOST', 'postgres')}:{os.getenv('POSTGRES_PORT', '5432')}/{os.getenv('POSTGRES_DB', 'airflow')}"
     
     logger.info("Connecting to PostgreSQL...")
     pg_engine = create_engine(pg_conn_string)

@@ -1,3 +1,0 @@
-Received exception from server (version 25.9.3):
-Code: 81. DB::Exception: Received from localhost:9000. DB::Exception: Database events_db does not exist. (UNKNOWN_DATABASE)
-(query: SELECT * FROM events_db.events FORMAT CSV)

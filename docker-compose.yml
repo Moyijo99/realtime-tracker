@@ -63,7 +63,7 @@ services:
       retries: 5
     restart: always
 
-  # 🧩 --- Kafka & Zookeeper setup ---
+
   zookeeper:
     image: confluentinc/cp-zookeeper:7.5.0
     environment:
@@ -82,12 +82,13 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://0.0.0.0:29092
     restart: always
 
-  # 🧩 --- Kafka Producer ---
   producer:
     build:
       context: .
@@ -104,14 +105,16 @@ services:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     restart: on-failure
 
-  # 🧩 --- Kafka Consumer ---
+
   consumer:
     build:
       context: .
       dockerfile: Dockerfile.consumer
     depends_on:
-      - kafka
-      - postgres
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_started
     environment:
       POSTGRES_USER: airflow
       POSTGRES_PASSWORD: airflow
@@ -121,7 +124,6 @@ services:
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     restart: always
 
-  # --- Airflow Components ---
   airflow-webserver:
     <<: *airflow-common
     command: webserver
