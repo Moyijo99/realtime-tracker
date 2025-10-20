@@ -1,0 +1,31 @@
+[2025-10-20T17:00:00.618+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-10-20T17:00:00.627+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: events_analytics_pipeline.extract_and_load_to_clickhouse scheduled__2025-10-20T16:00:00+00:00 [queued]>
+[2025-10-20T17:00:00.630+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: events_analytics_pipeline.extract_and_load_to_clickhouse scheduled__2025-10-20T16:00:00+00:00 [queued]>
+[2025-10-20T17:00:00.630+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 3
+[2025-10-20T17:00:00.633+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): extract_and_load_to_clickhouse> on 2025-10-20 16:00:00+00:00
+[2025-10-20T17:00:00.636+0000] {standard_task_runner.py:63} INFO - Started process 3383 to run task
+[2025-10-20T17:00:00.637+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'events_analytics_pipeline', 'extract_and_load_to_clickhouse', 'scheduled__2025-10-20T16:00:00+00:00', '--job-id', '122', '--raw', '--subdir', 'DAGS_FOLDER/events_pipeline_dag.py', '--cfg-path', '/tmp/tmpqg8wz5lp']
+[2025-10-20T17:00:00.638+0000] {standard_task_runner.py:91} INFO - Job 122: Subtask extract_and_load_to_clickhouse
+[2025-10-20T17:00:00.653+0000] {task_command.py:426} INFO - Running <TaskInstance: events_analytics_pipeline.extract_and_load_to_clickhouse scheduled__2025-10-20T16:00:00+00:00 [running]> on host 0d320e139cdc
+[2025-10-20T17:00:00.680+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data-team' AIRFLOW_CTX_DAG_ID='events_analytics_pipeline' AIRFLOW_CTX_TASK_ID='extract_and_load_to_clickhouse' AIRFLOW_CTX_EXECUTION_DATE='2025-10-20T16:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-10-20T16:00:00+00:00'
+[2025-10-20T17:00:00.680+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-10-20T17:00:00.685+0000] {events_pipeline_dag.py:68} INFO - Connecting to PostgreSQL...
+[2025-10-20T17:00:00.686+0000] {events_pipeline_dag.py:71} INFO - Extracting data from PostgreSQL...
+[2025-10-20T17:00:00.817+0000] {events_pipeline_dag.py:82} INFO - Extracted 6095 rows from PostgreSQL
+[2025-10-20T17:00:00.818+0000] {events_pipeline_dag.py:84} INFO - Connecting to ClickHouse...
+[2025-10-20T17:00:00.818+0000] {events_pipeline_dag.py:87} INFO - Clearing existing data...
+[2025-10-20T17:00:00.821+0000] {events_pipeline_dag.py:90} INFO - Loading data into ClickHouse...
+[2025-10-20T17:00:00.827+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 1/7
+[2025-10-20T17:00:00.832+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 2/7
+[2025-10-20T17:00:00.836+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 3/7
+[2025-10-20T17:00:00.841+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 4/7
+[2025-10-20T17:00:00.845+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 5/7
+[2025-10-20T17:00:00.849+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 6/7
+[2025-10-20T17:00:00.852+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 7/7
+[2025-10-20T17:00:00.853+0000] {events_pipeline_dag.py:100} INFO - ✓ Successfully loaded 6095 rows into ClickHouse
+[2025-10-20T17:00:00.860+0000] {python.py:237} INFO - Done. Returned value was: 6095
+[2025-10-20T17:00:00.860+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-10-20T17:00:00.866+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=events_analytics_pipeline, task_id=extract_and_load_to_clickhouse, run_id=scheduled__2025-10-20T16:00:00+00:00, execution_date=20251020T160000, start_date=20251020T170000, end_date=20251020T170000
+[2025-10-20T17:00:00.900+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-10-20T17:00:00.909+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-10-20T17:00:00.910+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
