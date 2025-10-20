@@ -3,6 +3,8 @@ dbt-clickhouse==1.7.2
 clickhouse-driver==0.2.6
 clickhouse-connect==0.6.23
 pandas==2.1.4
-sqlalchemy==2.0.23
+sqlalchemy>=1.4.36,<2.0.0
 psycopg2-binary==2.9.9
 apache-airflow==2.9.2
+faker==19.12.0
+kafka-python==2.0.2

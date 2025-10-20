@@ -2,11 +2,12 @@ from urllib.parse import urlparse
 from kafka import KafkaConsumer
 import psycopg2
 import json
+import os
 
 # Initialize Kafka consumer
 consumer = KafkaConsumer(
     "events",
-    bootstrap_servers="localhost:9092",
+    bootstrap_servers="kafka:9092",
     value_deserializer=lambda m: json.loads(m.decode("utf-8")),
     auto_offset_reset="earliest",
     enable_auto_commit=True,
@@ -15,11 +16,11 @@ consumer = KafkaConsumer(
 
 # Connect to Postgres
 conn = psycopg2.connect(
-    dbname="airflow",
-    user="airflow",
-    password="airflow",
-    host="postgres",
-    port="5432"
+    dbname=os.getenv("POSTGRES_DB", "events_db"),
+    user=os.getenv("POSTGRES_USER", "postgres"),
+    password=os.getenv("POSTGRES_PASSWORD", "postgres"),
+    host=os.getenv("POSTGRES_HOST", "postgres"),
+    port=os.getenv("POSTGRES_PORT", "5432")
 )
 cursor = conn.cursor()
 
@@ -44,31 +45,26 @@ def is_valid_event(event):
         "event_type", "page_url", "ip_address", "timestamp"
     ]
     
-    # All required fields must be present and non-empty
     for field in required_fields:
         if field not in event or event[field] in (None, "", "null"):
             print(f"Invalid event - missing {field}")
             return False
 
-    # Optional: type checks
     if event["event_type"] not in ["page_view", "click", "form_submit"]:
         print(f"Invalid event type: {event['event_type']}")
         return False
 
     return True
 
-
 def clean_event(event):
     """Clean and normalize event data."""
     event["username"] = event["username"].strip().lower()
 
-    # Ensure page_url has a leading slash
     if not event["page_url"].startswith("/"):
         parsed = urlparse(event["page_url"])
         event["page_url"] = parsed.path or f"/{event['page_url']}"
 
     return event
-
 
 print("Listening for events and inserting into Postgres...")
 
@@ -76,9 +72,8 @@ for message in consumer:
     event = message.value
     event = clean_event(event)
 
-
     if not is_valid_event(event):
-        continue  # Skip invalid events
+        continue
 
     try:
         cursor.execute("""

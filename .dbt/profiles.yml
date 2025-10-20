@@ -1,5 +1,5 @@
 event_gen:
-  target: dev
+  target: clickhouse
   outputs:
     dev:
       type: clickhouse
@@ -7,6 +7,17 @@ event_gen:
       port: 9000
       user: default
       password: ''
-      schema: analytics
+      database: events_db
+      schema: events_db
+      threads: 4
+      secure: false
+    clickhouse:
+      type: clickhouse
+      host: clickhouse
+      port: 9000
+      user: default
+      password: ''
+      database: events_db
+      schema: events_db
       threads: 4
       secure: false

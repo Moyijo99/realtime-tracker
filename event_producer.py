@@ -4,7 +4,6 @@ import time
 import uuid
 from datetime import datetime, timezone
 from faker import Faker
-import psycopg2
 import random
 
 fake = Faker()
@@ -12,7 +11,7 @@ fake = Faker()
 EVENT_TYPES = ["page_view", "click", "form_submit"]
 
 producer = KafkaProducer(
-    bootstrap_servers="localhost:9092",
+    bootstrap_servers="kafka:9092",  # Changed to internal Docker service name
     value_serializer=lambda v: json.dumps(v).encode("utf-8")
 )
 
@@ -34,7 +33,6 @@ def produce_events():
         print(f"Sent event: {event}")
         producer.flush()
         time.sleep(random.uniform(0.5, 2))
-
 
 if __name__ == "__main__":
     produce_events()

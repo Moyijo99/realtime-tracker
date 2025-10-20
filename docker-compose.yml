@@ -1,15 +1,18 @@
 x-airflow-common:
   &airflow-common
-  image: apache/airflow:2.8.1-python3.11
+  build:
+    context: .
+    dockerfile: Dockerfile.airflow
   environment:
     &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
-    AIRFLOW__CORE__FERNET_KEY: ''
-    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
-    AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth,airflow.api.auth.backend.session'
-    AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: 'true'
+    POSTGRES_USER: airflow
+    POSTGRES_PASSWORD: airflow
+    POSTGRES_HOST: postgres
+    POSTGRES_PORT: 5432
+    POSTGRES_DB: airflow
   volumes:
     - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
     - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
@@ -18,7 +21,6 @@ x-airflow-common:
     - ${AIRFLOW_PROJ_DIR:-.}/data:/opt/airflow/data
     - ${AIRFLOW_PROJ_DIR:-.}/event_gen:/opt/airflow/event_gen
     - ${AIRFLOW_PROJ_DIR:-.}/.dbt:/opt/airflow/.dbt
-    - ${AIRFLOW_PROJ_DIR:-.}/requirements.txt:/opt/airflow/requirements.txt
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
@@ -28,6 +30,7 @@ x-airflow-common:
 services:
   postgres:
     image: postgres:13
+    container_name: realtime-tracker-postgres-1
     environment:
       POSTGRES_USER: airflow
       POSTGRES_PASSWORD: airflow
@@ -40,6 +43,8 @@ services:
       retries: 5
       start_period: 5s
     restart: always
+    ports:
+      - "5432:5432"
 
   clickhouse:
     image: clickhouse/clickhouse-server:latest
@@ -51,6 +56,7 @@ services:
     environment:
       CLICKHOUSE_DB: events_db
       CLICKHOUSE_USER: default
+      CLICKHOUSE_PASSWORD: ""
       CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
     ulimits:
       nofile:
@@ -62,7 +68,6 @@ services:
       timeout: 5s
       retries: 5
     restart: always
-
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.5.0
@@ -79,6 +84,7 @@ services:
       - zookeeper
     ports:
       - "9092:9092"
+      - "29092:29092"
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
@@ -86,7 +92,7 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://0.0.0.0:29092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:29092
     restart: always
 
   producer:
@@ -95,16 +101,9 @@ services:
       dockerfile: Dockerfile.producer
     depends_on:
       - kafka
-      - postgres
     environment:
-      POSTGRES_USER: airflow
-      POSTGRES_PASSWORD: airflow
-      POSTGRES_DB: airflow
-      POSTGRES_HOST: postgres
-      POSTGRES_PORT: 5432
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     restart: on-failure
-
 
   consumer:
     build:
@@ -140,6 +139,8 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
+      clickhouse:
+        condition: service_healthy
 
   airflow-scheduler:
     <<: *airflow-common
@@ -155,6 +156,8 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
+      clickhouse:
+        condition: service_healthy
 
   airflow-init:
     <<: *airflow-common
@@ -164,9 +167,6 @@ services:
       - |
         mkdir -p /sources/logs /sources/dags /sources/plugins /sources/data
         chown -R "${AIRFLOW_UID}:0" /sources/{logs,dags,plugins,data}
-        if [ -f /opt/airflow/requirements.txt ]; then
-          pip install --user -r /opt/airflow/requirements.txt
-        fi
         exec /entrypoint airflow version
     environment:
       <<: *airflow-common-env
@@ -177,6 +177,26 @@ services:
     user: "0:0"
     volumes:
       - ${AIRFLOW_PROJ_DIR:-.}:/sources
+
+  metabase:
+    image: metabase/metabase:latest
+    container_name: realtime-tracker-metabase-1
+    ports:
+      - "3000:3000"
+    environment:
+      MB_DB_TYPE: postgres
+      MB_DB_DBNAME: airflow
+      MB_DB_PORT: 5432
+      MB_DB_USER: airflow
+      MB_DB_PASS: airflow
+      MB_DB_HOST: postgres
+      MB_PLUGINS_DIR: /plugins
+    volumes:
+      - ${AIRFLOW_PROJ_DIR:-.}/metabase_plugins:/plugins
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: always
 
 volumes:
   postgres-db-volume:

@@ -1,0 +1,26 @@
+[2025-10-20T05:45:02.039+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-10-20T05:45:02.059+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: events_analytics_pipeline.extract_and_load_to_clickhouse manual__2025-10-20T05:27:54.969341+00:00 [queued]>
+[2025-10-20T05:45:02.064+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: events_analytics_pipeline.extract_and_load_to_clickhouse manual__2025-10-20T05:27:54.969341+00:00 [queued]>
+[2025-10-20T05:45:02.064+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 3
+[2025-10-20T05:45:02.071+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): extract_and_load_to_clickhouse> on 2025-10-20 05:27:54.969341+00:00
+[2025-10-20T05:45:02.075+0000] {standard_task_runner.py:63} INFO - Started process 524 to run task
+[2025-10-20T05:45:02.079+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'events_analytics_pipeline', 'extract_and_load_to_clickhouse', 'manual__2025-10-20T05:27:54.969341+00:00', '--job-id', '14', '--raw', '--subdir', 'DAGS_FOLDER/events_pipeline_dag.py', '--cfg-path', '/tmp/tmpw6kksg_n']
+[2025-10-20T05:45:02.082+0000] {standard_task_runner.py:91} INFO - Job 14: Subtask extract_and_load_to_clickhouse
+[2025-10-20T05:45:02.120+0000] {task_command.py:426} INFO - Running <TaskInstance: events_analytics_pipeline.extract_and_load_to_clickhouse manual__2025-10-20T05:27:54.969341+00:00 [running]> on host 0d320e139cdc
+[2025-10-20T05:45:02.158+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data-team' AIRFLOW_CTX_DAG_ID='events_analytics_pipeline' AIRFLOW_CTX_TASK_ID='extract_and_load_to_clickhouse' AIRFLOW_CTX_EXECUTION_DATE='2025-10-20T05:27:54.969341+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-20T05:27:54.969341+00:00'
+[2025-10-20T05:45:02.159+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-10-20T05:45:02.166+0000] {events_pipeline_dag.py:68} INFO - Connecting to PostgreSQL...
+[2025-10-20T05:45:02.167+0000] {events_pipeline_dag.py:71} INFO - Extracting data from PostgreSQL...
+[2025-10-20T05:45:02.395+0000] {events_pipeline_dag.py:82} INFO - Extracted 1961 rows from PostgreSQL
+[2025-10-20T05:45:02.395+0000] {events_pipeline_dag.py:84} INFO - Connecting to ClickHouse...
+[2025-10-20T05:45:02.396+0000] {events_pipeline_dag.py:87} INFO - Clearing existing data...
+[2025-10-20T05:45:02.402+0000] {events_pipeline_dag.py:90} INFO - Loading data into ClickHouse...
+[2025-10-20T05:45:02.416+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 1/2
+[2025-10-20T05:45:02.423+0000] {events_pipeline_dag.py:97} INFO - Inserted batch 2/2
+[2025-10-20T05:45:02.425+0000] {events_pipeline_dag.py:100} INFO - ✓ Successfully loaded 5883 rows into ClickHouse
+[2025-10-20T05:45:02.431+0000] {python.py:237} INFO - Done. Returned value was: 5883
+[2025-10-20T05:45:02.432+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-10-20T05:45:02.440+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=events_analytics_pipeline, task_id=extract_and_load_to_clickhouse, run_id=manual__2025-10-20T05:27:54.969341+00:00, execution_date=20251020T052754, start_date=20251020T054502, end_date=20251020T054502
+[2025-10-20T05:45:02.461+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-10-20T05:45:02.473+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-10-20T05:45:02.474+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

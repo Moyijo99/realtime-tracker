@@ -4,13 +4,13 @@ Events Analytics Pipeline DAG - Complete Automation
 
 from airflow import DAG
 from airflow.operators.python import PythonOperator
-from airflow.operators.bash import BashOperator
 from datetime import datetime, timedelta
 import pandas as pd
 from sqlalchemy import create_engine
 from clickhouse_driver import Client
 import logging
 import os
+import subprocess
 
 default_args = {
     'owner': 'data-team',
@@ -63,8 +63,7 @@ def extract_and_load_to_clickhouse(**context):
     """Extract data from PostgreSQL and load into ClickHouse"""
     logger = logging.getLogger(__name__)
     
-    # Use environment variables for connection
-    pg_conn_string = f"postgresql+psycopg2://{os.getenv('POSTGRES_USER', 'airflow')}:{os.getenv('POSTGRES_PASSWORD', 'airflow')}@{os.getenv('POSTGRES_HOST', 'postgres')}:{os.getenv('POSTGRES_PORT', '5432')}/{os.getenv('POSTGRES_DB', 'airflow')}"
+    pg_conn_string = f"postgresql+psycopg2://{os.getenv('POSTGRES_USER', 'postgres')}:{os.getenv('POSTGRES_PASSWORD', 'postgres')}@{os.getenv('POSTGRES_HOST', 'postgres')}:{os.getenv('POSTGRES_PORT', '5432')}/{os.getenv('POSTGRES_DB', 'events_db')}"
     
     logger.info("Connecting to PostgreSQL...")
     pg_engine = create_engine(pg_conn_string)
@@ -76,7 +75,6 @@ def extract_and_load_to_clickhouse(**context):
     if 'timestamp' in events_df.columns:
         events_df["timestamp"] = pd.to_datetime(events_df["timestamp"]).dt.tz_localize(None)
     
-    # Convert UUID columns to strings
     for col in ['event_id', 'user_id']:
         if col in events_df.columns:
             events_df[col] = events_df[col].astype(str)
@@ -132,6 +130,61 @@ def verify_clickhouse_data(**context):
     
     return count
 
+def run_dbt_command(command, **context):
+    """Run dbt command using subprocess"""
+    logger = logging.getLogger(__name__)
+    
+    project_dir = "/opt/airflow/event_gen"
+    profiles_dir = "/opt/airflow/.dbt"
+    
+    # Split command into parts to handle multi-word commands like "docs generate"
+    command_parts = command.split()
+    
+    # Use direct dbt CLI command
+    cmd = [
+        "dbt",
+        *command_parts,
+        "--profiles-dir", profiles_dir,
+        "--project-dir", project_dir
+    ]
+    
+    logger.info(f"Running command: {' '.join(cmd)}")
+    
+    try:
+        result = subprocess.run(
+            cmd,
+            cwd=project_dir,
+            capture_output=True,
+            text=True,
+            check=True  # This will raise CalledProcessError if the command fails
+        )
+        
+        logger.info(f"STDOUT:\n{result.stdout}")
+        
+        if result.stderr:
+            logger.warning(f"STDERR:\n{result.stderr}")
+            
+        return result.stdout
+        
+    except subprocess.CalledProcessError as e:
+        logger.error(f"dbt {command} failed with error:\n{e.stderr}")
+        raise
+    except FileNotFoundError:
+        logger.error("dbt command not found. Please ensure dbt is installed in the Airflow container")
+        raise RuntimeError("dbt command not found. Please ensure dbt is installed in the Airflow container")
+
+def dbt_run(**context):
+    """Run dbt models"""
+    return run_dbt_command("run", **context)
+
+def dbt_test(**context):
+    """Run dbt tests"""
+    return run_dbt_command("test", **context)
+
+def dbt_docs(**context):
+    """Generate dbt docs"""
+    return run_dbt_command("docs generate", **context)
+
 setup_task = PythonOperator(
     task_id='setup_clickhouse_schema',
     python_callable=setup_clickhouse_schema,
@@ -150,24 +203,22 @@ verify_task = PythonOperator(
     dag=dag,
 )
 
-# Updated dbt command with explicit paths
-dbt_run_task = BashOperator(
+dbt_run_task = PythonOperator(
     task_id='dbt_run',
-    bash_command='cd /opt/airflow/event_gen && /home/airflow/.local/bin/dbt run --profiles-dir /opt/airflow/.dbt --project-dir /opt/airflow/event_gen',
+    python_callable=dbt_run,
     dag=dag,
 )
 
-dbt_test_task = BashOperator(
+dbt_test_task = PythonOperator(
     task_id='dbt_test',
-    bash_command='cd /opt/airflow/event_gen && /home/airflow/.local/bin/dbt test --profiles-dir /opt/airflow/.dbt --project-dir /opt/airflow/event_gen',
+    python_callable=dbt_test,
     dag=dag,
 )
 
-dbt_docs_task = BashOperator(
+dbt_docs_task = PythonOperator(
     task_id='dbt_docs_generate',
-    bash_command='cd /opt/airflow/event_gen && /home/airflow/.local/bin/dbt docs generate --profiles-dir /opt/airflow/.dbt --project-dir /opt/airflow/event_gen',
+    python_callable=dbt_docs,
     dag=dag,
 )
 
-# Define task dependencies
 setup_task >> extract_load_task >> verify_task >> dbt_run_task >> dbt_test_task >> dbt_docs_task
