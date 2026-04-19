@@ -1,200 +1,196 @@
-# 🚀 Real-Time Event Tracking Pipeline
+# Real-Time Event Tracking Pipeline
 
-A scalable real-time event tracking pipeline that processes user events through Kafka, stores them in PostgreSQL, transforms them with dbt in ClickHouse, and visualizes them in Metabase.
+A production-style data engineering project that simulates the core event ingestion and analytics stack used by product and growth teams. User events flow from a Kafka message queue through a consumer service into PostgreSQL, then get extracted, loaded, and transformed via Airflow and dbt into ClickHouse for analytics — all visualized in Metabase.
 
-## 🏗️ Architecture
-graph LR
-    A[Event Producer] --> B[Kafka]
-    B --> C[Consumer]
-    C --> D[PostgreSQL]
-    E[Airflow DAG] --> D
-    E --> F[ClickHouse]
-    F --> G[Metabase]
+> **Why this stack?** Kafka decouples event ingestion from processing, allowing the pipeline to handle bursts without data loss. ClickHouse is chosen over querying PostgreSQL directly because it's purpose-built for aggregation over large event volumes — queries that take seconds in Postgres run in milliseconds in ClickHouse. dbt enforces SQL-based transformation logic as version-controlled code rather than ad hoc queries.
 
-## ⚙️ Components
+---
 
-- Event Producer: Generates synthetic user events (Python + Faker)
+## Architecture
 
-- Apache Kafka: Message queue for event streaming
+```
+Event Producer (Python/Faker)
+        │
+        ▼
+   Apache Kafka          ← message queue, decouples ingestion from processing
+        │
+        ▼
+  Kafka Consumer
+        │
+        ▼
+   PostgreSQL            ← operational store / Airflow metadata
+        │
+        ▼  (Airflow DAG — hourly)
+   ClickHouse            ← OLAP store optimised for analytics queries
+        │
+        ▼
+  dbt models             ← staging → mart transformation layer
+        │
+        ▼
+    Metabase              ← dashboards & visualisation
+```
 
-- Event Consumer: Processes events from Kafka to PostgreSQL
+---
 
-- PostgreSQL: Initial data storage
+## Pipeline Stages
 
-- Apache Airflow: Orchestrates data pipeline
+**1. Event Generation**
+A Python producer using `Faker` continuously generates synthetic user events (page views, clicks, conversions) and publishes them to the `events` Kafka topic.
 
-- ClickHouse: OLAP database for analytics
+**2. Event Ingestion**
+A Kafka consumer reads from the topic and writes raw events into PostgreSQL. PostgreSQL acts as the operational store and source of truth before analytics processing.
 
-- dbt: Data transformation
+**3. Orchestration & Load**
+An Airflow DAG runs hourly to extract new events from PostgreSQL and load them into ClickHouse. This ELT separation means the raw data is always preserved and reprocessable.
 
-- Metabase: Data visualization
+**4. Transformation**
+dbt models layer on top of ClickHouse:
+- `staging/` — light cleaning and type casting of raw events
+- `marts/` — aggregated models ready for dashboard consumption
 
-## 📋 Prerequisites
+**5. Visualisation**
+Metabase connects directly to ClickHouse marts for real-time dashboards.
 
-Docker and Docker Compose
+---
 
-Python 3.10+
+## Tech Stack
 
-Git
+| Layer | Tool | Purpose |
+|---|---|---|
+| Ingestion | Apache Kafka | Event streaming & decoupling |
+| Storage | PostgreSQL | Operational / raw event store |
+| Orchestration | Apache Airflow | Scheduling & pipeline monitoring |
+| OLAP | ClickHouse | High-performance analytics queries |
+| Transformation | dbt | Version-controlled SQL models |
+| Visualisation | Metabase | Dashboards |
+| Synthetic Data | Python + Faker | Event simulation |
 
-## 🚀 Quick Start
-1. Clone the repository
+---
+
+## Getting Started
+
+### Prerequisites
+- Docker & Docker Compose
+- Python 3.10+
+- Git
+
+### Run Locally
+
+```bash
+# 1. Clone the repo
 git clone https://github.com/Moyijo99/realtime-tracker.git
 cd realtime-tracker
 
-2. Start the services
+# 2. Start all services
 docker-compose up -d
 
-3. Create Kafka topic
-docker-compose exec kafka kafka-topics --create --topic events \
-    --partitions 1 --replication-factor 1 --if-not-exists \
-    --bootstrap-server localhost:9092
+# 3. Create the Kafka topic
+docker-compose exec kafka kafka-topics \
+  --create --topic events \
+  --partitions 1 --replication-factor 1 \
+  --if-not-exists \
+  --bootstrap-server localhost:9092
+```
 
-4. Access the services
+### Access Services
 
-🌀 Airflow: http://localhost:8080
+| Service | URL | Credentials |
+|---|---|---|
+| Airflow | http://localhost:8080 | admin / admin |
+| Metabase | http://localhost:3000 | — |
+| ClickHouse (HTTP) | http://localhost:8123 | — |
+| ClickHouse (native) | localhost:9000 | — |
 
-(user: admin, password: admin)
+---
 
-📊 Metabase: http://localhost:3000
+## Project Structure
 
-🗄️ ClickHouse: localhost:8123 (HTTP) or localhost:9000 (native)
-
-## 📁 Project Structure
-
+```
 realtime-tracker/
 ├── dags/
-│   └── events_pipeline_dag.py     # Airflow DAG definition
-├── event_gen/                     # dbt project
+│   └── events_pipeline_dag.py   # Airflow DAG: PostgreSQL → ClickHouse → dbt
+├── event_gen/                    # dbt project
 │   ├── models/
-│   │   ├── staging/              # Initial data models
-│   │   └── marts/                # Final analytics models
+│   │   ├── staging/              # Type casting, deduplication
+│   │   └── marts/                # Aggregated analytics models
 │   └── dbt_project.yml
-├── docker-compose.yml             # Service definitions
-├── Dockerfile.airflow             # Airflow custom image
-├── Dockerfile.consumer            # Kafka consumer image
-├── Dockerfile.producer            # Event producer image
-├── event_producer.py              # Event generation script
-├── consumer.py                    # Kafka consumer script
-└── requirements.txt               # Python dependencies
+├── event_producer.py             # Synthetic event generation (Faker)
+├── consumer.py                   # Kafka consumer → PostgreSQL
+├── docker-compose.yml            # Full service stack
+├── Dockerfile.airflow
+├── Dockerfile.consumer
+├── Dockerfile.producer
+└── requirements.txt
+```
 
-## 🔄 Pipeline Flow
+---
 
-1️⃣ Event Generation
+## Environment Variables
 
-The producer continuously generates synthetic user events
+```env
+# Kafka
+KAFKA_BOOTSTRAP_SERVERS=kafka:9092
 
-Events are published to the Kafka topic events
+# PostgreSQL
+POSTGRES_USER=airflow
+POSTGRES_PASSWORD=airflow
+POSTGRES_DB=airflow
 
-2️⃣ Event Processing
+# ClickHouse
+CLICKHOUSE_DB=events_db
+CLICKHOUSE_USER=default
+CLICKHOUSE_PASSWORD=
+```
 
-The consumer reads events from Kafka
+Airflow also requires two connections configured in the UI:
+- `postgres_default`
+- `clickhouse_default`
 
-Events are stored in PostgreSQL
+---
 
-3️⃣ Data Pipeline
+## Monitoring & Debugging
 
-The Airflow DAG runs hourly
-
-Extracts data from PostgreSQL
-
-Loads into ClickHouse
-
-Runs dbt models for transformation
-
-4️⃣ Analytics
-
-Transformed data available in ClickHouse
-
-Visualized through Metabase dashboards
-
-## ⚙️ Configuration
-
-- Environment Variables
-    Kafka
-    KAFKA_BOOTSTRAP_SERVERS=kafka:9092
-
-- PostgreSQL
-    POSTGRES_USER=airflow
-    POSTGRES_PASSWORD=airflow
-    POSTGRES_DB=airflow
-
-- ClickHouse
-    CLICKHOUSE_DB=events_db
-    CLICKHOUSE_USER=default
-    CLICKHOUSE_PASSWORD=""
-
-- Airflow Connections
-
-Required connections in Airflow:
-
-    postgres_default
-    clickhouse_default
-
-## 🧠 Monitoring
-
-Check producer logs
+```bash
+# Stream producer / consumer logs
 docker-compose logs -f producer
-
-Check consumer logs
 docker-compose logs -f consumer
 
-Check Kafka messages
+# Verify Kafka messages
 docker-compose exec kafka kafka-console-consumer \
-    --bootstrap-server localhost:9092 \
-    --topic events --from-beginning
+  --bootstrap-server localhost:9092 \
+  --topic events --from-beginning
 
-Check PostgreSQL data
+# Check row counts
 docker-compose exec postgres psql -U airflow -d airflow \
-    -c "SELECT COUNT(*) FROM events;"
+  -c "SELECT COUNT(*) FROM events;"
 
-Check ClickHouse data
 docker-compose exec clickhouse clickhouse-client \
-    --query "SELECT COUNT(*) FROM events_db.events;"
+  --query "SELECT COUNT(*) FROM events_db.events;"
+```
 
-## 🧩 Development
+### Common Issues
 
-1. Modify Event Producer
+| Symptom | Likely Cause | Fix |
+|---|---|---|
+| Kafka connection refused | Zookeeper not healthy | Check `KAFKA_BOOTSTRAP_SERVERS`; wait for Zookeeper startup |
+| Missing data in ClickHouse | DAG not triggered or failed | Check Airflow DAG logs; verify Postgres → ClickHouse transfer |
+| Consumer not processing | Topic doesn't exist | Confirm topic was created; check consumer group ID in logs |
 
-- Edit event_producer.py to change event generation logic
+---
 
-- Adjust generation rate in the main loop
+## Extending the Project
 
-2. Update Transformations
+**Change event schema** — edit `event_producer.py` and update the corresponding dbt staging model to reflect new fields.
 
-- Modify dbt models under models/
+**Adjust pipeline frequency** — modify `schedule_interval` in `events_pipeline_dag.py`.
 
-- Run dbt manually:
+**Add dbt models** — place new `.sql` files under `models/` and run:
+```bash
+dbt run --profiles-dir /opt/airflow/.dbt
+```
 
-    dbt run --profiles-dir /opt/airflow/.dbt
+---
 
-3. Adjust Pipeline Schedule
+## License
 
-- Edit events_pipeline_dag.py
-
-- Change schedule_interval to set frequency
-
-## 🧰 Troubleshooting
-Issue	Possible Cause	Solution
-Kafka Connection Issues	Zookeeper not running	Ensure Zookeeper is active and check KAFKA_BOOTSTRAP_SERVERS
-Missing Data in ClickHouse	Airflow DAG not triggered	Verify DAG status, PostgreSQL → ClickHouse transfer logs, and dbt execution
-Consumer Not Processing	Kafka topic missing	Confirm topic exists, verify consumer group ID, and database connection
-
-## 📜 License
-
-MIT License
-Free to use, modify, and distribute.
-
-## 🤝 Contributing
-
-1. Fork the repository
-
-2. Create your feature branch
-
-3. Commit your changes
-
-4. Push to the branch
-
-5. Create a Pull Request
-
-💡 Built with ❤️ for real-time analytics, data engineering, and scalable event-driven systems.
+MIT — free to use, modify, and distribute.
